@@ -41,7 +41,7 @@ Public Class frmCadCliente
     Private Sub tsbIncluir_Click(sender As Object, e As EventArgs) Handles tsbIncluir.Click
         'TIPO DE OPERAÇÃO
         intOpcao = Opcao.Incluir
-        '
+        'alterado pelo notebook
         'CONFIGURANDO OS BOTÕES
         tsbIncluir.Enabled = False
         tsbEditar.Enabled = False
