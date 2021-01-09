@@ -257,7 +257,7 @@ Public Class CAD_CLIENTE
         Dim tabela As New DataTable
         Dim par As List(Of SqlParameter)
         Dim banco As DataAccess
-
+        'Alterado para o Git
         Try
             '
             'INSTANCIAR A CLASSE DO BANCO
