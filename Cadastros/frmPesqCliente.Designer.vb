@@ -24,15 +24,18 @@ Partial Class frmPesqCliente
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmPesqCliente))
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.cboTipo = New System.Windows.Forms.ComboBox()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.txtNome = New Controls.CursoTextBox()
-        Me.txtCPFCNPJ = New Controls.CursoTextBoxCPF_CNPJ()
         Me.Label3 = New System.Windows.Forms.Label()
+        Me.txtCPFCNPJ = New Controls.CursoTextBoxCPF_CNPJ()
+        Me.txtNome = New Controls.CursoTextBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.cboTipo = New System.Windows.Forms.ComboBox()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.dgvDados = New System.Windows.Forms.DataGridView()
         Me.btnPesquisar = New System.Windows.Forms.Button()
         Me.btnCancelar = New System.Windows.Forms.Button()
+        Me.colID = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colNome = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colCPFCNPJ = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.GroupBox1.SuspendLayout()
         CType(Me.dgvDados, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -52,45 +55,18 @@ Partial Class frmPesqCliente
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Filtrar por"
         '
-        'Label1
+        'Label3
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(37, 22)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(31, 13)
-        Me.Label1.TabIndex = 0
-        Me.Label1.Text = "Tipo:"
-        '
-        'cboTipo
-        '
-        Me.cboTipo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cboTipo.FormattingEnabled = True
-        Me.cboTipo.Items.AddRange(New Object() {"-----Todos-----", "Físico", "Jurídico"})
-        Me.cboTipo.Location = New System.Drawing.Point(74, 19)
-        Me.cboTipo.Name = "cboTipo"
-        Me.cboTipo.Size = New System.Drawing.Size(121, 21)
-        Me.cboTipo.TabIndex = 1
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(30, 49)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(38, 13)
-        Me.Label2.TabIndex = 2
-        Me.Label2.Text = "Nome:"
-        '
-        'txtNome
-        '
-        Me.txtNome.EnviaTab = True
-        Me.txtNome.Location = New System.Drawing.Point(74, 46)
-        Me.txtNome.Name = "txtNome"
-        Me.txtNome.Size = New System.Drawing.Size(364, 20)
-        Me.txtNome.SomenteNumero = False
-        Me.txtNome.TabIndex = 3
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(6, 75)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(62, 13)
+        Me.Label3.TabIndex = 5
+        Me.Label3.Text = "CPF/CNPJ:"
         '
         'txtCPFCNPJ
         '
+        Me.txtCPFCNPJ.Enabled = False
         Me.txtCPFCNPJ.EnviaTab = True
         Me.txtCPFCNPJ.ExibirMensagem = False
         Me.txtCPFCNPJ.IsValido = False
@@ -102,20 +78,49 @@ Partial Class frmPesqCliente
         Me.txtCPFCNPJ.ValidaCNPJ = False
         Me.txtCPFCNPJ.ValidaCPF = True
         '
-        'Label3
+        'txtNome
         '
-        Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(6, 75)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(62, 13)
-        Me.Label3.TabIndex = 5
-        Me.Label3.Text = "CPF/CNPJ:"
+        Me.txtNome.EnviaTab = True
+        Me.txtNome.Location = New System.Drawing.Point(74, 46)
+        Me.txtNome.Name = "txtNome"
+        Me.txtNome.Size = New System.Drawing.Size(364, 20)
+        Me.txtNome.SomenteNumero = False
+        Me.txtNome.TabIndex = 3
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(30, 49)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(38, 13)
+        Me.Label2.TabIndex = 2
+        Me.Label2.Text = "Nome:"
+        '
+        'cboTipo
+        '
+        Me.cboTipo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboTipo.FormattingEnabled = True
+        Me.cboTipo.Items.AddRange(New Object() {"-----Todos-----", "Físico", "Jurídico"})
+        Me.cboTipo.Location = New System.Drawing.Point(74, 19)
+        Me.cboTipo.Name = "cboTipo"
+        Me.cboTipo.Size = New System.Drawing.Size(121, 21)
+        Me.cboTipo.TabIndex = 1
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(37, 22)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(31, 13)
+        Me.Label1.TabIndex = 0
+        Me.Label1.Text = "Tipo:"
         '
         'dgvDados
         '
         Me.dgvDados.AllowUserToAddRows = False
         Me.dgvDados.AllowUserToDeleteRows = False
         Me.dgvDados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvDados.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colID, Me.colNome, Me.colCPFCNPJ})
         Me.dgvDados.Location = New System.Drawing.Point(12, 129)
         Me.dgvDados.Name = "dgvDados"
         Me.dgvDados.ReadOnly = True
@@ -144,6 +149,30 @@ Partial Class frmPesqCliente
         Me.btnCancelar.Text = "Cancelar"
         Me.btnCancelar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
         Me.btnCancelar.UseVisualStyleBackColor = True
+        '
+        'colID
+        '
+        Me.colID.DataPropertyName = "ID_CLIENTE"
+        Me.colID.HeaderText = "ID"
+        Me.colID.Name = "colID"
+        Me.colID.ReadOnly = True
+        Me.colID.Width = 50
+        '
+        'colNome
+        '
+        Me.colNome.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.colNome.DataPropertyName = "NOME_CLIENTE"
+        Me.colNome.HeaderText = "Nome"
+        Me.colNome.Name = "colNome"
+        Me.colNome.ReadOnly = True
+        '
+        'colCPFCNPJ
+        '
+        Me.colCPFCNPJ.DataPropertyName = "CPF_CNPJ_CLIENTE"
+        Me.colCPFCNPJ.HeaderText = "CPF / CNPJ"
+        Me.colCPFCNPJ.Name = "colCPFCNPJ"
+        Me.colCPFCNPJ.ReadOnly = True
+        Me.colCPFCNPJ.Width = 150
         '
         'frmPesqCliente
         '
@@ -178,4 +207,7 @@ Partial Class frmPesqCliente
     Friend WithEvents btnPesquisar As Windows.Forms.Button
     Friend WithEvents btnCancelar As Windows.Forms.Button
     Friend WithEvents dgvDados As Windows.Forms.DataGridView
+    Friend WithEvents colID As Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents colNome As Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents colCPFCNPJ As Windows.Forms.DataGridViewTextBoxColumn
 End Class
