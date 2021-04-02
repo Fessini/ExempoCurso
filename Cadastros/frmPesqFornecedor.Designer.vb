@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class frmPesqCliente
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+Partial Class frmPesqFornecedor
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,9 +20,9 @@ Partial Class frmPesqCliente
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmPesqCliente))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmPesqFornecedor))
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.txtCPFCNPJ = New Controls.CursoTextBoxCPF_CNPJ()
@@ -152,7 +152,7 @@ Partial Class frmPesqCliente
         '
         'colID
         '
-        Me.colID.DataPropertyName = "ID_CLIENTE"
+        Me.colID.DataPropertyName = "ID_FORNECEDOR"
         Me.colID.HeaderText = "ID"
         Me.colID.Name = "colID"
         Me.colID.ReadOnly = True
@@ -161,20 +161,20 @@ Partial Class frmPesqCliente
         'colNome
         '
         Me.colNome.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.colNome.DataPropertyName = "NOME_CLIENTE"
+        Me.colNome.DataPropertyName = "NOME_FORNECEDOR"
         Me.colNome.HeaderText = "Nome"
         Me.colNome.Name = "colNome"
         Me.colNome.ReadOnly = True
         '
         'colCPFCNPJ
         '
-        Me.colCPFCNPJ.DataPropertyName = "CPF_CNPJ_CLIENTE"
+        Me.colCPFCNPJ.DataPropertyName = "CPF_CNPJ_FORNECEDOR"
         Me.colCPFCNPJ.HeaderText = "CPF / CNPJ"
         Me.colCPFCNPJ.Name = "colCPFCNPJ"
         Me.colCPFCNPJ.ReadOnly = True
         Me.colCPFCNPJ.Width = 150
         '
-        'frmPesqCliente
+        'frmPesqFornecedor
         '
         Me.AcceptButton = Me.btnPesquisar
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -186,10 +186,10 @@ Partial Class frmPesqCliente
         Me.Controls.Add(Me.btnCancelar)
         Me.Controls.Add(Me.GroupBox1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.Name = "frmPesqCliente"
+        Me.Name = "frmPesqFornecedor"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Pesquisa Cliente"
+        Me.Text = "Pesquisa Fornecedor"
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         CType(Me.dgvDados, System.ComponentModel.ISupportInitialize).EndInit()

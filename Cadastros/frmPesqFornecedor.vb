@@ -2,11 +2,11 @@
 Imports DataBase.Utils
 Imports System.Windows.Forms
 
-Public Class frmPesqCliente
+Public Class frmPesqFornecedor
 #Region "Propriedades"
-    Public Property IDCliente As Integer
+    Public Property IDFornecedor As Integer
 #End Region
-    Private Sub frmPesqCliente_Load(sender As Object, e As EventArgs) Handles Me.Load
+    Private Sub frmPesqFornecedor_Load(sender As Object, e As EventArgs) Handles Me.Load
         cboTipo.SelectedIndex = 0
     End Sub
 
@@ -29,7 +29,7 @@ Public Class frmPesqCliente
     End Sub
 
     Private Sub btnPesquisar_Click(sender As Object, e As EventArgs) Handles btnPesquisar.Click
-        Dim banco As New CAD_CLIENTE
+        Dim banco As New CAD_FORNECEDOR
         Dim nome, cpfcnpj As String
         Dim tipo As String
         Dim tabela As DataTable
@@ -48,7 +48,7 @@ Public Class frmPesqCliente
             End Select
             '
             'FAZ A PESQUISA
-            tabela = banco.BuscaCliente(tipo, nome, cpfcnpj)
+            tabela = banco.BuscaFORNECEDOR(tipo, nome, cpfcnpj)
             '
             'VINCULA A TABELA
             dgvDados.AutoGenerateColumns = False
@@ -60,20 +60,20 @@ Public Class frmPesqCliente
             End If
 
         Catch ex As Exception
-            TrataErro("Problema ao tentar fazer a pesquisa do cliente.", ex)
+            TrataErro("Problema ao tentar fazer a pesquisa do fornecedor.", ex)
         End Try
     End Sub
 
     Private Sub dgvDados_DoubleClick(sender As Object, e As EventArgs) Handles dgvDados.DoubleClick
         If dgvDados.Rows.Count > 0 Then
-            IDCliente = dgvDados.CurrentRow.Cells("colID").Value
+            IDFornecedor = dgvDados.CurrentRow.Cells("colID").Value
             Me.Close()
         End If
     End Sub
 
     Private Sub dgvDados_KeyDown(sender As Object, e As KeyEventArgs) Handles dgvDados.KeyDown
         If dgvDados.Rows.Count > 0 And e.KeyCode = Keys.Enter Then
-            IDCliente = dgvDados.CurrentRow.Cells("colID").Value
+            IDFornecedor = dgvDados.CurrentRow.Cells("colID").Value
             Me.Close()
         End If
     End Sub

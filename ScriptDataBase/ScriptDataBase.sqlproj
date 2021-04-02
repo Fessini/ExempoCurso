@@ -65,5 +65,20 @@
     <Build Include="dbo\Stored Procedures\PR_NOVO_CLIENTE.sql" />
     <Build Include="dbo\Stored Procedures\PR_BUSCA_CLIENTE.sql" />
     <Build Include="dbo\Stored Procedures\PR_ATUALIZA_CLIENTE.sql" />
+    <Build Include="dbo\Tables\MOV_CONTA_RECEBER_ITEM.sql" />
+    <Build Include="dbo\Tables\MOV_CONTA_RECEBER.sql" />
+    <Build Include="dbo\Tables\MOV_CONTA_PAGAR_ITEM.sql" />
+    <Build Include="dbo\Tables\MOV_CONTA_PAGAR.sql" />
+    <Build Include="dbo\Tables\CAD_FORNECEDOR.sql" />
+    <Build Include="dbo\Tables\CAD_CONTA_BANCO.sql" />
+    <Build Include="dbo\Stored Procedures\PR_NOVO_FORNECEDOR.sql" />
+    <Build Include="dbo\Stored Procedures\PR_NOVO_CONTA_BANCO.sql" />
+    <Build Include="dbo\Stored Procedures\PR_BUSCA_FORNECEDORS.sql" />
+    <Build Include="dbo\Stored Procedures\PR_BUSCA_FORNECEDOR.sql" />
+    <Build Include="dbo\Stored Procedures\PR_BUSCA_CONTA_BANCOS.sql" />
+    <Build Include="dbo\Stored Procedures\PR_BUSCA_CONTA_BANCO.sql" />
+    <Build Include="dbo\Stored Procedures\PR_BUSCA_CLIENTES.sql" />
+    <Build Include="dbo\Stored Procedures\PR_ATUALIZA_FORNECEDOR.sql" />
+    <Build Include="dbo\Stored Procedures\PR_ATUALIZA_CONTA_BANCO.sql" />
   </ItemGroup>
 </Project>

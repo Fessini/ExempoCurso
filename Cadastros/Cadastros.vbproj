@@ -66,10 +66,22 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmCadFornecedor.Designer.vb">
+      <DependentUpon>frmCadFornecedor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmCadFornecedor.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmCadCliente.Designer.vb">
       <DependentUpon>frmCadCliente.vb</DependentUpon>
     </Compile>
     <Compile Include="frmCadCliente.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPesqFornecedor.Designer.vb">
+      <DependentUpon>frmPesqFornecedor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmPesqFornecedor.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmPesqCliente.Designer.vb">
@@ -95,8 +107,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="frmCadFornecedor.resx">
+      <DependentUpon>frmCadFornecedor.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmCadCliente.resx">
       <DependentUpon>frmCadCliente.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPesqFornecedor.resx">
+      <DependentUpon>frmPesqFornecedor.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmPesqCliente.resx">
       <DependentUpon>frmPesqCliente.vb</DependentUpon>

@@ -2,7 +2,7 @@
 Imports System.Windows.Forms
 Imports DataBase.Utils
 
-Public Class frmCadCliente
+Public Class frmCadFornecedor
 #Region "Variáveis"
     Private Enum Opcao As Integer
         Cancelar = 0
@@ -13,12 +13,12 @@ Public Class frmCadCliente
     Private intOpcao As Opcao
 #End Region
 #Region "Métodos"
-    Private Sub PesqCliente()
-        Using frm As New frmPesqCliente
+    Private Sub PesqFornecedor()
+        Using frm As New frmPesqFornecedor
             frm.ShowDialog()
-            If frm.IDCliente > 0 Then
+            If frm.IDFORNECEDOR > 0 Then
                 Dim enter As New KeyEventArgs(Keys.Enter)
-                txtID.Text = frm.IDCliente
+                txtID.Text = frm.IDFORNECEDOR
                 txtID_KeyDown(Nothing, enter)
             End If
         End Using
@@ -207,7 +207,7 @@ Public Class frmCadCliente
 
     Private Sub tsbGravar_Click(sender As Object, e As EventArgs) Handles tsbGravar.Click
         Dim blnValida As Boolean = True
-        Dim objCliente As CAD_CLIENTE
+        Dim objFORNECEDOR As CAD_FORNECEDOR
 
         Try
             'VALIDAÇÃO DOS CAMPOS
@@ -249,33 +249,33 @@ Public Class frmCadCliente
             If blnValida = False Then Exit Sub
             '
             'INSTANCIA A CLASSE
-            objCliente = New CAD_CLIENTE With {
-                .BAIRRO_CLIENTE = txtBairro.Text,
-                .CEP_CLIENTE = txtCEP.Text,
-                .CIDADE_CLIENTE = txtCidade.Text,
-                .COMPLEMENTO_CLIENTE = txtComplemento.Text,
-                .CPF_CNPJ_CLIENTE = txtCPFCNPJ.Text,
-                .EMAIL_CLIENTE = txtEmail.Text,
-                .ENDERECO_CLIENTE = txtLogradouro.Text,
-                .FONE_CLIENTE_1 = txtFone1.Text,
-                .FONE_CLIENTE_2 = txtFone2.Text,
-                .FANTASIA_CLIENTE = txtFantasia.Text,
-                .INSC_ESTADUAL_CLIENTE = txtInscEstadual.Text,
-                .INSC_MUNICIPAL_CLIENTE = txtInsMunicipal.Text,
-                .NOME_CLIENTE = txtNome.Text,
-                .NUMERO_CLIENTE = txtNumero.Text,
-                .TIPO_CLIENTE = IIf(rbFisico.Checked, "F", "J"),
+            objFORNECEDOR = New CAD_FORNECEDOR With {
+                .BAIRRO_FORNECEDOR = txtBairro.Text,
+                .CEP_FORNECEDOR = txtCEP.Text,
+                .CIDADE_FORNECEDOR = txtCidade.Text,
+                .COMPLEMENTO_FORNECEDOR = txtComplemento.Text,
+                .CPF_CNPJ_FORNECEDOR = txtCPFCNPJ.Text,
+                .EMAIL_FORNECEDOR = txtEmail.Text,
+                .ENDERECO_FORNECEDOR = txtLogradouro.Text,
+                .FONE_FORNECEDOR_1 = txtFone1.Text,
+                .FONE_FORNECEDOR_2 = txtFone2.Text,
+                .FANTASIA_FORNECEDOR = txtFantasia.Text,
+                .INSC_ESTADUAL_FORNECEDOR = txtInscEstadual.Text,
+                .INSC_MUNICIPAL_FORNECEDOR = txtInsMunicipal.Text,
+                .NOME_FORNECEDOR = txtNome.Text,
+                .NUMERO_FORNECEDOR = txtNumero.Text,
+                .TIPO_FORNECEDOR = IIf(rbFisico.Checked, "F", "J"),
                 .UF = txtUF.Text}
-            '.ID_CLIENTE = IIf(txtID.TextLength > 0, Convert.ToInt32(txtID.Text), "0")}
+            '.ID_FORNECEDOR = IIf(txtID.TextLength > 0, Convert.ToInt32(txtID.Text), "0")}
             If txtID.TextLength > 0 Then
-                objCliente.ID_CLIENTE = Convert.ToInt32(txtID.Text)
+                objFORNECEDOR.ID_FORNECEDOR = Convert.ToInt32(txtID.Text)
             End If
 
             '
             'SELECIONA O TIPO DE OPERAÇÃO
             Select Case intOpcao
                 Case Opcao.Incluir
-                    If objCliente.NovoCliente Then
+                    If objFORNECEDOR.NovoFORNECEDOR Then
                         'SETA TIPO OPERAÇÃO
                         intOpcao = Opcao.Cancelar
                         '
@@ -283,17 +283,17 @@ Public Class frmCadCliente
                         tsbCancelar_Click(Nothing, Nothing)
                         '
                         'FAZ PERGUNTA PARA ADICIONAR OUTRO
-                        If MessageBox.Show("Cliente adicionado com sucesso!" & vbNewLine &
+                        If MessageBox.Show("Fornecedor adicionado com sucesso!" & vbNewLine &
                                            "Deseja adicionar outro?", "Aviso",
                                               MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
                             'CHAMA ROTINA PARA INCLUIR OUTRO
                             tsbIncluir_Click(Nothing, Nothing)
                         End If
                     Else
-                        MessageBox.Show("Problema ao tentar gravar cliente.", "Erro", MessageBoxButtons.YesNo, MessageBoxIcon.Error)
+                        MessageBox.Show("Problema ao tentar gravar fornecedor.", "Erro", MessageBoxButtons.YesNo, MessageBoxIcon.Error)
                     End If
                 Case Opcao.Editar
-                    If objCliente.AtualizaCliente Then
+                    If objFORNECEDOR.AtualizaFORNECEDOR Then
                         'SETA TIPO OPERAÇÃO
                         intOpcao = Opcao.Cancelar
                         '
@@ -301,48 +301,48 @@ Public Class frmCadCliente
                         tsbCancelar_Click(Nothing, Nothing)
                         '
                         'FAZ PERGUNTA PARA ADICIONAR OUTRO
-                        If MessageBox.Show("Cliente alterado com sucesso!" & vbNewLine &
+                        If MessageBox.Show("Fornecedor alterado com sucesso!" & vbNewLine &
                                            "Deseja alterar outro?", "Aviso",
                                               MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
                             'CHAMA ROTINA PARA INCLUIR OUTRO
                             tsbEditar_Click(Nothing, Nothing)
                         End If
                     Else
-                        MessageBox.Show("Problema ao tentar gravar cliente.", "Erro", MessageBoxButtons.YesNo, MessageBoxIcon.Error)
+                        MessageBox.Show("Problema ao tentar gravar fornecedor.", "Erro", MessageBoxButtons.YesNo, MessageBoxIcon.Error)
                     End If
             End Select
         Catch ex As Exception
-            TrataErro("Problema ao tentar gravar cliente.", ex)
+            TrataErro("Problema ao tentar gravar fornecedor.", ex)
         End Try
     End Sub
 
     Private Sub txtID_KeyDown(sender As Object, e As KeyEventArgs) Handles txtID.KeyDown
         If txtID.TextLength > 0 And e.KeyCode = Keys.Enter Then
-            Dim objCliente As New CAD_CLIENTE
+            Dim objFORNECEDOR As New CAD_FORNECEDOR
 
             Try
-                objCliente.ID_CLIENTE = Convert.ToInt32(txtID.Text)
+                objFORNECEDOR.ID_FORNECEDOR = Convert.ToInt32(txtID.Text)
                 'PREECHE OS DADOS
-                If objCliente.BuscaCliente Then
-                    txtBairro.Text = objCliente.BAIRRO_CLIENTE
-                    txtCEP.Text = objCliente.CEP_CLIENTE
-                    txtCidade.Text = objCliente.CIDADE_CLIENTE
-                    txtComplemento.Text = objCliente.COMPLEMENTO_CLIENTE
-                    txtCPFCNPJ.Text = objCliente.CPF_CNPJ_CLIENTE
+                If objFORNECEDOR.BuscaFORNECEDOR Then
+                    txtBairro.Text = objFORNECEDOR.BAIRRO_FORNECEDOR
+                    txtCEP.Text = objFORNECEDOR.CEP_FORNECEDOR
+                    txtCidade.Text = objFORNECEDOR.CIDADE_FORNECEDOR
+                    txtComplemento.Text = objFORNECEDOR.COMPLEMENTO_FORNECEDOR
+                    txtCPFCNPJ.Text = objFORNECEDOR.CPF_CNPJ_FORNECEDOR
                     txtCPFCNPJ.IsValido = True
-                    txtEmail.Text = objCliente.EMAIL_CLIENTE
-                    txtFantasia.Text = objCliente.FANTASIA_CLIENTE
-                    txtFone1.Text = objCliente.FONE_CLIENTE_1
-                    txtFone2.Text = objCliente.FONE_CLIENTE_2
-                    txtInscEstadual.Text = objCliente.INSC_ESTADUAL_CLIENTE
-                    txtInsMunicipal.Text = objCliente.INSC_MUNICIPAL_CLIENTE
-                    txtLogradouro.Text = objCliente.ENDERECO_CLIENTE
-                    txtNome.Text = objCliente.NOME_CLIENTE
-                    txtNumero.Text = objCliente.NUMERO_CLIENTE
-                    txtUF.Text = objCliente.UF
-                    dtpInclusao.Value = objCliente.DATA_INCLUSAO_CLIENTE.Date
-                    If objCliente.DATA_ALTERACAO_CLIENTE <> CDate("01/01/0001") Then
-                        dtpAlteracao.Value = objCliente.DATA_ALTERACAO_CLIENTE.Date
+                    txtEmail.Text = objFORNECEDOR.EMAIL_FORNECEDOR
+                    txtFantasia.Text = objFORNECEDOR.FANTASIA_FORNECEDOR
+                    txtFone1.Text = objFORNECEDOR.FONE_FORNECEDOR_1
+                    txtFone2.Text = objFORNECEDOR.FONE_FORNECEDOR_2
+                    txtInscEstadual.Text = objFORNECEDOR.INSC_ESTADUAL_FORNECEDOR
+                    txtInsMunicipal.Text = objFORNECEDOR.INSC_MUNICIPAL_FORNECEDOR
+                    txtLogradouro.Text = objFORNECEDOR.ENDERECO_FORNECEDOR
+                    txtNome.Text = objFORNECEDOR.NOME_FORNECEDOR
+                    txtNumero.Text = objFORNECEDOR.NUMERO_FORNECEDOR
+                    txtUF.Text = objFORNECEDOR.UF
+                    dtpInclusao.Value = objFORNECEDOR.DATA_INCLUSAO_FORNECEDOR.Date
+                    If objFORNECEDOR.DATA_ALTERACAO_FORNECEDOR <> CDate("01/01/0001") Then
+                        dtpAlteracao.Value = objFORNECEDOR.DATA_ALTERACAO_FORNECEDOR.Date
                     End If
                     '
                     'VERIFICA O TIPO DE OPERAÇÃO
@@ -353,7 +353,7 @@ Public Class frmCadCliente
                         tsbGravar.Enabled = True
                         txtNome.Focus()
                     End If
-                    If objCliente.TIPO_CLIENTE = CAD_CLIENTE.Fisico Then
+                    If objFORNECEDOR.TIPO_FORNECEDOR = CAD_FORNECEDOR.Fisico Then
                         rbFisico.Checked = True
                     Else
                         rbJuridico.Checked = True
@@ -362,11 +362,11 @@ Public Class frmCadCliente
                     MessageBox.Show("ID não cadastrado!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 End If
             Catch ex As Exception
-                TrataErro("Problema ao tentar localizar cliente.", ex)
+                TrataErro("Problema ao tentar localizar fornecedor.", ex)
             End Try
         ElseIf txtID.TextLength = 0 And e.KeyCode = Keys.Enter Then
-            'CHAMA FORMULÁRIO DE PESQUISA DE CLIENTE
-            PesqCliente()
+            'CHAMA FORMULÁRIO DE PESQUISA DE FORNECEDOR
+            PesqFornecedor()
         End If
     End Sub
 
@@ -387,7 +387,7 @@ Public Class frmCadCliente
         End If
     End Sub
 
-    Private Sub frmCadCliente_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
+    Private Sub frmCadFORNECEDOR_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
         If tsbIncluir.Enabled = True And e.KeyCode = Keys.F2 Then
             tsbIncluir_Click(Nothing, Nothing)
         ElseIf tsbEditar.Enabled = True And e.KeyCode = Keys.F3 Then
@@ -402,7 +402,7 @@ Public Class frmCadCliente
     End Sub
 
     Private Sub btnPesquisar_Click(sender As Object, e As EventArgs) Handles btnPesquisar.Click
-        'CHAMA FORMULÁRIO DE PESQUISA DE CLIENTE
-        PesqCliente()
+        'CHAMA FORMULÁRIO DE PESQUISA DE FORNECEDOR
+        PesqFornecedor()
     End Sub
 End Class

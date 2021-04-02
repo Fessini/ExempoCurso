@@ -251,7 +251,7 @@ Public Class CAD_CLIENTE
     ''' <param name="nome">Nome do cliente.</param>
     ''' <param name="cpfcnpj">CPF ou CNPJ do cliente.</param>
     ''' <returns></returns>
-    Public Function BuscaCliente(Optional ByVal tipo As Char = "",
+    Public Function BuscaCliente(Optional ByVal tipo As String = "",
                                   Optional ByVal nome As String = "",
                                   Optional ByVal cpfcnpj As String = "") As DataTable
         Dim tabela As New DataTable
