@@ -80,5 +80,11 @@
     <Build Include="dbo\Stored Procedures\PR_BUSCA_CLIENTES.sql" />
     <Build Include="dbo\Stored Procedures\PR_ATUALIZA_FORNECEDOR.sql" />
     <Build Include="dbo\Stored Procedures\PR_ATUALIZA_CONTA_BANCO.sql" />
+    <Build Include="dbo\Stored Procedures\PR_NOVO_CONTA_RECEBER_ITEM.sql" />
+    <Build Include="dbo\Stored Procedures\PR_NOVO_CONTA_RECEBER.sql" />
+    <Build Include="dbo\Stored Procedures\PR_DELETE_CONTA_RECEBER_ITEM.sql" />
+    <Build Include="dbo\Stored Procedures\PR_BUSCA_PARCELAS_CONTA_RECEBER_ITEM.sql" />
+    <Build Include="dbo\Stored Procedures\PR_ATUALIZA_CONTA_RECEBER_ITEM.sql" />
+    <Build Include="dbo\Stored Procedures\PR_ATUALIZA_CONTA_RECEBER.sql" />
   </ItemGroup>
 </Project>

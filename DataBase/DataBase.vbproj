@@ -74,6 +74,7 @@
     <Compile Include="CAD_CONTA_BANCO.vb" />
     <Compile Include="CAD_FORNECEDOR.vb" />
     <Compile Include="DataAccess.vb" />
+    <Compile Include="MOV_CONTA_RECEBER.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

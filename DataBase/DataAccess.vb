@@ -15,6 +15,10 @@ Public Class DataAccess
     End Sub
 #End Region
 
+#Region "Propriedade"
+    Public Property RetornoValor As Object
+#End Region
+
 #Region "Funções"
     ''' <summary>
     ''' Verifica e se o banco estiver aberto fecha a conexão.
@@ -57,6 +61,44 @@ Public Class DataAccess
             retornoReader = command.ExecuteReader
 
             Return retornoReader
+
+        Catch ex As Exception
+            Throw ex
+        Finally
+            command = Nothing
+        End Try
+    End Function
+    ''' <summary>
+    ''' Função para excutar comandos de (INSERT, UPDATE E DELETE).
+    ''' </summary>
+    ''' <param name="procedure">Nome da procedure.</param>
+    ''' <param name="parametros">Lista de parametros.</param>
+    ''' <returns>Boolean.</returns>
+    Public Function ExecuteStoreProcedureRetorno(ByVal procedure As String,
+                                           ByVal parametros As List(Of SqlParameter)) As Boolean
+        Dim retorno As Boolean = False
+
+        Try
+            'PREPARANDO O CAMANDO PARA EXECUTAR UMA PROCEDURE
+            command = New SqlCommand
+            command = conn.CreateCommand
+            command.CommandType = CommandType.StoredProcedure
+            command.CommandText = procedure
+            command.Parameters.Clear()
+
+            'ADICIONAR OS PARAMETROS
+            For Each Par As SqlParameter In parametros
+                command.Parameters.Add(Par)
+            Next
+
+            'EXECUTA O COMANDO
+            RetornoValor = command.ExecuteScalar
+
+            If RetornoValor > 0 Then
+                retorno = True
+            End If
+
+            Return retorno
 
         Catch ex As Exception
             Throw ex
