@@ -86,5 +86,11 @@
     <Build Include="dbo\Stored Procedures\PR_BUSCA_PARCELAS_CONTA_RECEBER_ITEM.sql" />
     <Build Include="dbo\Stored Procedures\PR_ATUALIZA_CONTA_RECEBER_ITEM.sql" />
     <Build Include="dbo\Stored Procedures\PR_ATUALIZA_CONTA_RECEBER.sql" />
+    <Build Include="dbo\Stored Procedures\PR_NOVO_CONTA_PAGAR_ITEM.sql" />
+    <Build Include="dbo\Stored Procedures\PR_NOVO_CONTA_PAGAR.sql" />
+    <Build Include="dbo\Stored Procedures\PR_DELETE_CONTA_PAGAR_ITEM.sql" />
+    <Build Include="dbo\Stored Procedures\PR_BUSCA_PARCELAS_CONTA_PAGAR_ITEM.sql" />
+    <Build Include="dbo\Stored Procedures\PR_ATUALIZA_CONTA_PAGAR_ITEM.sql" />
+    <Build Include="dbo\Stored Procedures\PR_ATUALIZA_CONTA_PAGAR.sql" />
   </ItemGroup>
 </Project>

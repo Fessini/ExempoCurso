@@ -131,6 +131,10 @@
       <Project>{8D4B173E-13AB-4999-9E41-BDC48475296E}</Project>
       <Name>Controls</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Financeiro\Financeiro.vbproj">
+      <Project>{6f949160-9380-4b04-a880-6b6b599cea5d}</Project>
+      <Name>Financeiro</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="icone_principal.ico" />
