@@ -22,6 +22,7 @@ Partial Class frmContaReceber
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.tsPrincipal = New System.Windows.Forms.ToolStrip()
         Me.tsbIncluir = New System.Windows.Forms.ToolStripButton()
         Me.tsbEditar = New System.Windows.Forms.ToolStripButton()
@@ -68,6 +69,8 @@ Partial Class frmContaReceber
         Me.btnRemover = New System.Windows.Forms.Button()
         Me.btnBaixar = New System.Windows.Forms.Button()
         Me.dgvParcelas = New System.Windows.Forms.DataGridView()
+        Me.ssPrincipal = New System.Windows.Forms.StatusStrip()
+        Me.tsslAtalho = New System.Windows.Forms.ToolStripStatusLabel()
         Me.colIdMovItem = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colCodigoContaReceber = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colNumero = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -75,8 +78,6 @@ Partial Class frmContaReceber
         Me.colVencimento = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colCodigoContaBanco = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colPagamento = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ssPrincipal = New System.Windows.Forms.StatusStrip()
-        Me.tsslAtalho = New System.Windows.Forms.ToolStripStatusLabel()
         Me.tsPrincipal.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
@@ -573,6 +574,22 @@ Partial Class frmContaReceber
         Me.dgvParcelas.Size = New System.Drawing.Size(569, 120)
         Me.dgvParcelas.TabIndex = 0
         '
+        'ssPrincipal
+        '
+        Me.ssPrincipal.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsslAtalho})
+        Me.ssPrincipal.Location = New System.Drawing.Point(0, 465)
+        Me.ssPrincipal.Name = "ssPrincipal"
+        Me.ssPrincipal.Size = New System.Drawing.Size(603, 22)
+        Me.ssPrincipal.TabIndex = 4
+        Me.ssPrincipal.Text = "StatusStrip1"
+        '
+        'tsslAtalho
+        '
+        Me.tsslAtalho.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tsslAtalho.Name = "tsslAtalho"
+        Me.tsslAtalho.Size = New System.Drawing.Size(375, 17)
+        Me.tsslAtalho.Text = "Incluir - F2 | Editar - F3 | Consultar - F4 | Gravar - F5 | Cancelar - Esc"
+        '
         'colIdMovItem
         '
         Me.colIdMovItem.DataPropertyName = "ID_MOV_CONTA_ITEM"
@@ -599,6 +616,10 @@ Partial Class frmContaReceber
         'colValor
         '
         Me.colValor.DataPropertyName = "VALOR_PARCELA_RECEBER"
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopRight
+        DataGridViewCellStyle1.Format = "N2"
+        DataGridViewCellStyle1.NullValue = Nothing
+        Me.colValor.DefaultCellStyle = DataGridViewCellStyle1
         Me.colValor.HeaderText = "Valor"
         Me.colValor.Name = "colValor"
         Me.colValor.ReadOnly = True
@@ -623,22 +644,6 @@ Partial Class frmContaReceber
         Me.colPagamento.HeaderText = "Pagamento"
         Me.colPagamento.Name = "colPagamento"
         Me.colPagamento.ReadOnly = True
-        '
-        'ssPrincipal
-        '
-        Me.ssPrincipal.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsslAtalho})
-        Me.ssPrincipal.Location = New System.Drawing.Point(0, 465)
-        Me.ssPrincipal.Name = "ssPrincipal"
-        Me.ssPrincipal.Size = New System.Drawing.Size(603, 22)
-        Me.ssPrincipal.TabIndex = 4
-        Me.ssPrincipal.Text = "StatusStrip1"
-        '
-        'tsslAtalho
-        '
-        Me.tsslAtalho.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tsslAtalho.Name = "tsslAtalho"
-        Me.tsslAtalho.Size = New System.Drawing.Size(375, 17)
-        Me.tsslAtalho.Text = "Incluir - F2 | Editar - F3 | Consultar - F4 | Gravar - F5 | Cancelar - Esc"
         '
         'frmContaReceber
         '
@@ -711,6 +716,12 @@ Partial Class frmContaReceber
     Friend WithEvents rbInativo As Windows.Forms.RadioButton
     Friend WithEvents rbAtivo As Windows.Forms.RadioButton
     Friend WithEvents dgvParcelas As Windows.Forms.DataGridView
+    Friend WithEvents btnEstornar As Windows.Forms.Button
+    Friend WithEvents btnRemover As Windows.Forms.Button
+    Friend WithEvents btnBaixar As Windows.Forms.Button
+    Friend WithEvents ssPrincipal As Windows.Forms.StatusStrip
+    Friend WithEvents tsslAtalho As Windows.Forms.ToolStripStatusLabel
+    Friend WithEvents btnGeraParcela As Windows.Forms.Button
     Friend WithEvents colIdMovItem As Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents colCodigoContaReceber As Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents colNumero As Windows.Forms.DataGridViewTextBoxColumn
@@ -718,10 +729,4 @@ Partial Class frmContaReceber
     Friend WithEvents colVencimento As Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents colCodigoContaBanco As Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents colPagamento As Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents btnEstornar As Windows.Forms.Button
-    Friend WithEvents btnRemover As Windows.Forms.Button
-    Friend WithEvents btnBaixar As Windows.Forms.Button
-    Friend WithEvents ssPrincipal As Windows.Forms.StatusStrip
-    Friend WithEvents tsslAtalho As Windows.Forms.ToolStripStatusLabel
-    Friend WithEvents btnGeraParcela As Windows.Forms.Button
 End Class

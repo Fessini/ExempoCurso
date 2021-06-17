@@ -15,9 +15,58 @@ Public Class frmContaReceber
     '
     'DataTable para controlar as parcelas
     Private dtParcelas As DataTable
+    Private Pesq() As DataRow
+    Private ParcelasReceber As New List(Of PARCELA_CONTA_RECEBER)
 #End Region
 
 #Region "Métodos"
+    Private Sub GeraParcelas()
+        Dim dtData As Date = dtpVencimento.Value
+        Dim dblValorParcela As Double = Math.Round(Convert.ToDouble(txtValor.Text) / Convert.ToInt32(txtQtdParcelas.Text), 2)
+        Dim dblTotalParcela, dblDiferenca As Double
+
+        NovoDataTableParcela()
+        '
+        'Gera as parcelas
+        For I As Integer = 1 To Convert.ToInt32(txtQtdParcelas.Text)
+            Dim novaLinha As DataRow = dtParcelas.NewRow
+            novaLinha.Item("VALOR_PARCELA_RECEBER") = dblValorParcela
+            novaLinha.Item("NUMERO_PARCELA_RECEBER") = I
+            novaLinha.Item("DATA_VENCIMENTO_RECEBER") = dtData.Date
+            novaLinha.Item("STATUS") = "I"
+            'FAZ A SELEÇÃO DE MODO DE GERAR PARCELAS
+            If ckbMesmoDia.Checked = True Then 'MESMO DIA DE VENCIMENTO
+                dtData = dtData.Date.AddMonths(1)
+            Else 'QUANTIDADES DE DIAS DE VENCIMENTO
+                dtData = dtData.Date.AddDays(Convert.ToInt32(txtIntervalo.Text))
+            End If
+            dtParcelas.Rows.Add(novaLinha)
+            dblTotalParcela += dblValorParcela
+        Next
+        '
+        'VERIFICA O TOTAL DAS PARCELAS
+        dblDiferenca = Math.Round(Convert.ToDouble(txtValor.Text) - dblTotalParcela, 2)
+        If dblDiferenca > 0 Then
+            dtParcelas.Rows(0).Item("VALOR_PARCELA_RECEBER") = dblValorParcela + Math.Abs(dblDiferenca)
+        Else
+            dtParcelas.Rows(0).Item("VALOR_PARCELA_RECEBER") = dblValorParcela - Math.Abs(dblDiferenca)
+        End If
+        dtParcelas.AcceptChanges()
+        '
+        'PESQUISA AS PARCELAS
+        Pesq = dtParcelas.Select("STATUS <> 'D' OR STATUS IS NULL")
+        ParcelasReceber.Clear()
+        For Each Linha As DataRow In Pesq
+            Dim nova As New PARCELA_CONTA_RECEBER
+            nova.VALOR_PARCELA_RECEBER = Linha.Item("VALOR_PARCELA_RECEBER")
+            nova.NUMERO_PARCELA_RECEBER = Linha.Item("NUMERO_PARCELA_RECEBER")
+            nova.DATA_VENCIMENTO_RECEBER = Linha.Item("DATA_VENCIMENTO_RECEBER")
+            ParcelasReceber.Add(nova)
+        Next
+        dgvParcelas.AutoGenerateColumns = False
+        dgvParcelas.DataSource = ParcelasReceber
+        dgvParcelas.Refresh()
+    End Sub
     ''' <summary>
     ''' Cria o DataTable para controlar as parcelas.
     ''' </summary>
@@ -31,6 +80,7 @@ Public Class frmContaReceber
         dtParcelas.Columns.Add("DATA_PAGAMENTO_RECEBER", GetType(Date))
         dtParcelas.Columns.Add("DATA_VENCIMENTO_RECEBER", GetType(Date))
         dtParcelas.Columns.Add("NUMERO_PARCELA_RECEBER", GetType(Integer))
+        dtParcelas.Columns.Add("STATUS", GetType(String))
     End Sub
     ''' <summary>
     ''' Abre pesquisa de cliente.
@@ -177,5 +227,23 @@ Public Class frmContaReceber
 
     Private Sub txtCliente_TextChanged(sender As Object, e As EventArgs) Handles txtCliente.TextChanged
         lblCliente.Text = "-"
+    End Sub
+
+    Private Sub btnPesqCliente_Click(sender As Object, e As EventArgs) Handles btnPesqCliente.Click
+        'Chama a pesquisa
+        PesqCliente()
+    End Sub
+
+    Private Sub btnGeraParcela_Click(sender As Object, e As EventArgs) Handles btnGeraParcela.Click
+        GeraParcelas()
+    End Sub
+
+    Private Sub ckbMesmoDia_CheckedChanged(sender As Object, e As EventArgs) Handles ckbMesmoDia.CheckedChanged
+        If ckbMesmoDia.Checked = True Then
+            txtIntervalo.Enabled = False
+            txtIntervalo.Clear()
+        Else
+            txtIntervalo.Enabled = True
+        End If
     End Sub
 End Class
