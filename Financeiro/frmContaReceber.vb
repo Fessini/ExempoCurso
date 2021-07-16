@@ -15,6 +15,7 @@ Public Class frmContaReceber
     '
     'DataTable para controlar as parcelas
     Private dtParcelas As DataTable
+    'Private dtView As DataTable
     Private Pesq() As DataRow
     Private ParcelasReceber As New List(Of PARCELA_CONTA_RECEBER)
 #End Region
@@ -55,6 +56,8 @@ Public Class frmContaReceber
         '
         'PESQUISA AS PARCELAS
         Pesq = dtParcelas.Select("STATUS <> 'D' OR STATUS IS NULL")
+        '
+        'EXIBINDO POR LISTA
         ParcelasReceber.Clear()
         For Each Linha As DataRow In Pesq
             Dim nova As New PARCELA_CONTA_RECEBER
@@ -63,8 +66,17 @@ Public Class frmContaReceber
             nova.DATA_VENCIMENTO_RECEBER = Linha.Item("DATA_VENCIMENTO_RECEBER")
             ParcelasReceber.Add(nova)
         Next
+        '
+        'EXIBINDO POR DATATABLE
+        'dtView.Rows.Clear()
+        'For Each Linha As DataRow In Pesq
+        '    dtView.ImportRow(Linha)
+        'Next
+        'dtView.AcceptChanges()
+
         dgvParcelas.AutoGenerateColumns = False
         dgvParcelas.DataSource = ParcelasReceber
+        'dgvParcelas.DataSource = dtView
         dgvParcelas.Refresh()
     End Sub
     ''' <summary>
@@ -81,6 +93,7 @@ Public Class frmContaReceber
         dtParcelas.Columns.Add("DATA_VENCIMENTO_RECEBER", GetType(Date))
         dtParcelas.Columns.Add("NUMERO_PARCELA_RECEBER", GetType(Integer))
         dtParcelas.Columns.Add("STATUS", GetType(String))
+        'dtView = dtParcelas.Copy
     End Sub
     ''' <summary>
     ''' Abre pesquisa de cliente.
@@ -235,7 +248,9 @@ Public Class frmContaReceber
     End Sub
 
     Private Sub btnGeraParcela_Click(sender As Object, e As EventArgs) Handles btnGeraParcela.Click
-        GeraParcelas()
+        If txtIntervalo.TextLength > 0 Or ckbMesmoDia.Checked = True Then
+            GeraParcelas()
+        End If
     End Sub
 
     Private Sub ckbMesmoDia_CheckedChanged(sender As Object, e As EventArgs) Handles ckbMesmoDia.CheckedChanged
@@ -244,6 +259,121 @@ Public Class frmContaReceber
             txtIntervalo.Clear()
         Else
             txtIntervalo.Enabled = True
+        End If
+    End Sub
+
+    Private Sub tsbGravar_Click(sender As Object, e As EventArgs) Handles tsbGravar.Click
+        'DECLARA CLASSES
+        Dim objConta As MOV_CONTA_RECEBER
+        Dim blnValida As Boolean = True
+
+        Try
+            'FAZ A VALIDAÇÃO
+            If lblCliente.Text = "-" Then
+                epValida.SetError(txtCliente, "Favor selecione um cliente.")
+                blnValida = False
+            End If
+            If IsDate(dtpEmissao.Value) = False Then
+                epValida.SetError(dtpEmissao, "Formato de data incorreto.")
+                blnValida = False
+            End If
+            If IsDate(dtpVencimento.Value) = False Then
+                epValida.SetError(dtpVencimento, "Formato de data incorreto.")
+                blnValida = False
+            End If
+            If txtValor.TextLength = 0 Then
+                epValida.SetError(txtValor, "Favor informar o valor do documento.")
+                blnValida = False
+            Else
+                If IsNumeric(txtValor.Text) = False Then
+                    epValida.SetError(txtValor, "Formato incorreto de valor.")
+                    blnValida = False
+                End If
+            End If
+            If dgvParcelas.Rows.Count = 0 Then
+                epValida.SetError(btnGeraParcela, "Favor gerar pelo menos uma parcela.")
+                blnValida = False
+            End If
+            If blnValida = False Then Exit Sub
+            '
+            'INSTANCIA A CLASSE
+            objConta = New MOV_CONTA_RECEBER
+            objConta.CODIGO_CLIENTE = Convert.ToInt32(txtCliente.Text)
+            objConta.DATA_EMISSAO_RECEBER = dtpEmissao.Value
+            objConta.DATA_VENCIMENTO_RECEBER = dtpVencimento.Value
+            objConta.NUMERO_DOCUMENTO_RECEBER = txtNumero.Text
+            objConta.VALOR_CONTA_RECEBER = Convert.ToDouble(txtValor.Text)
+            objConta.OBS_CONTA_RECEBER = txtObs.Text
+            If rbAtivo.Checked = True Then
+                objConta.STATUS_CONTA_RECEBER = MOV_CONTA_RECEBER.Ativo
+            Else
+                objConta.STATUS_CONTA_RECEBER = MOV_CONTA_RECEBER.Inativo
+            End If
+            '
+            'FAZ A SELEÇÃO
+            Select Case intOpcao
+                Case Opcao.Incluir
+                    If objConta.NovaConta(dtParcelas) = True Then
+                        MessageBox.Show("Documento incluído com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    End If
+                Case Opcao.Editar
+            End Select
+        Catch ex As Exception
+            TrataErro("Problema ao tentar gravar documento.", ex)
+        End Try
+    End Sub
+
+    Private Sub txtDocumento_KeyDown(sender As Object, e As KeyEventArgs) Handles txtDocumento.KeyDown
+        If txtDocumento.TextLength > 0 And e.KeyCode = Keys.Enter Then
+            Dim objDocumento As New MOV_CONTA_RECEBER
+
+            Try
+                objDocumento.ID_CONTA_RECEBER = Convert.ToInt32(txtDocumento.Text)
+                If objDocumento.BuscaDocumento = True Then
+                    txtCliente.Text = objDocumento.CODIGO_CLIENTE
+                    txtCliente_KeyDown(Nothing, e)
+                    dtpEmissao.Value = objDocumento.DATA_EMISSAO_RECEBER
+                    dtpVencimento.Value = objDocumento.DATA_VENCIMENTO_RECEBER
+                    txtNumero.Text = objDocumento.NUMERO_DOCUMENTO_RECEBER
+                    txtValor.Text = FormatNumber(objDocumento.VALOR_CONTA_RECEBER, 2)
+                    txtObs.Text = objDocumento.OBS_CONTA_RECEBER
+                    dtpInclusao.Value = objDocumento.DATA_INCLUSAO
+                    If objDocumento.STATUS_CONTA_RECEBER = MOV_CONTA_RECEBER.Ativo Then
+                        rbAtivo.Checked = True
+                    Else
+                        rbInativo.Checked = True
+                    End If
+                    '
+                    'BUSCA DAS PARCELAS
+                    dtParcelas = objDocumento.BuscaParcelas(Convert.ToInt32(txtDocumento.Text))
+                    dtParcelas.Columns.Add("STATUS", GetType(String))
+                    'PESQUISA AS PARCELAS
+                    Pesq = dtParcelas.Select("STATUS <> 'D' OR STATUS IS NULL")
+                    '
+                    'EXIBINDO POR LISTA
+                    ParcelasReceber.Clear()
+                    For Each Linha As DataRow In Pesq
+                        Dim nova As New PARCELA_CONTA_RECEBER
+                        nova.VALOR_PARCELA_RECEBER = Linha.Item("VALOR_PARCELA_RECEBER")
+                        nova.NUMERO_PARCELA_RECEBER = Linha.Item("NUMERO_PARCELA_RECEBER")
+                        nova.DATA_VENCIMENTO_RECEBER = Linha.Item("DATA_VENCIMENTO_RECEBER")
+                        If Not IsDBNull(Linha.Item("NOME_BANCO")) Then nova.NOME_BANCO = Linha.Item("NOME_BANCO")
+                        ParcelasReceber.Add(nova)
+                    Next
+                    dgvParcelas.AutoGenerateColumns = False
+                    dgvParcelas.DataSource = ParcelasReceber
+                    dgvParcelas.Refresh()
+
+                    If intOpcao = Opcao.Editar Then
+                        AtivaDesativa(True)
+                        tsbGravar.Enabled = True
+                    End If
+                Else
+                    MessageBox.Show("Documento não encontrado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                End If
+            Catch ex As Exception
+                TrataErro("Problema ao tentar carregar documento.", ex)
+            End Try
         End If
     End Sub
 End Class

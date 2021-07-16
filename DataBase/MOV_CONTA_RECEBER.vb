@@ -9,11 +9,13 @@ Public Class MOV_CONTA_RECEBER
     Public Property VALOR_CONTA_RECEBER As Double
     Public Property STATUS_CONTA_RECEBER As String
     Public Property OBS_CONTA_RECEBER As String
+    Public Property DATA_INCLUSAO As Object
     '
     'PROPRIEDADES DA TABELA MOV_CONTA_RECEBER_ITEM
     Public Property ID_MOV_CONTA_ITEM As Integer
     Public Property CODIGO_CONTA_RECEBER As Integer
-    Public Property CODIGO_CONTA_BANCO As String
+    Public Property CODIGO_CONTA_BANCO As Integer
+    Public Property NOME_BANCO As String
     Public Property VALOR_PARCELA_RECEBER As Double
     Public Property DATA_PAGAMENTO_RECEBER As Object = Nothing
     Public Property DATA_VENCIMENTO_RECEBER As Object = Nothing
@@ -24,6 +26,8 @@ Public Class MOV_CONTA_RECEBER
     Public Const Aberto As Char = "A"
     Public Const Pago As Char = "P"
     Public Const Cancelado As Char = "C"
+    Public Const Ativo As Char = "A"
+    Public Const Inativo As Char = "I"
 #End Region
 
 #Region "Métodos"
@@ -61,6 +65,7 @@ Public Class MOV_CONTA_RECEBER
             par.Add(New SqlParameter("@DATA_EMISSAO_RECEBER", DATA_EMISSAO_RECEBER))
             par.Add(New SqlParameter("@VALOR_CONTA_RECEBER", VALOR_CONTA_RECEBER))
             par.Add(New SqlParameter("@STATUS_CONTA_RECEBER", STATUS_CONTA_RECEBER))
+            par.Add(New SqlParameter("@DATA_VENCIMENTO_RECEBER", DATA_VENCIMENTO_RECEBER))
             If OBS_CONTA_RECEBER.Length > 0 Then par.Add(New SqlParameter("@OBS_CONTA_RECEBER", OBS_CONTA_RECEBER))
             '
             'EXECUTRA A PROCEDURE
@@ -129,6 +134,7 @@ Public Class MOV_CONTA_RECEBER
             par.Add(New SqlParameter("@DATA_EMISSAO_RECEBER", DATA_EMISSAO_RECEBER))
             par.Add(New SqlParameter("@VALOR_CONTA_RECEBER", VALOR_CONTA_RECEBER))
             par.Add(New SqlParameter("@STATUS_CONTA_RECEBER", STATUS_CONTA_RECEBER))
+            par.Add(New SqlParameter("@DATA_VENCIMENTO_RECEBER", DATA_VENCIMENTO_RECEBER))
             If OBS_CONTA_RECEBER.Length > 0 Then par.Add(New SqlParameter("@OBS_CONTA_RECEBER", OBS_CONTA_RECEBER))
             '
             'EXECUTRA A PROCEDURE
@@ -221,8 +227,10 @@ Public Class MOV_CONTA_RECEBER
                 CODIGO_CLIENTE = dr("CODIGO_CLIENTE")
                 If Not IsDBNull(dr("NUMERO_DOCUMENTO_RECEBER")) Then NUMERO_DOCUMENTO_RECEBER = dr("NUMERO_DOCUMENTO_RECEBER")
                 DATA_EMISSAO_RECEBER = dr("DATA_EMISSAO_RECEBER")
+                DATA_VENCIMENTO_RECEBER = dr("DATA_VENCIMENTO_RECEBER")
                 VALOR_CONTA_RECEBER = dr("VALOR_CONTA_RECEBER")
                 STATUS_CONTA_RECEBER = dr("STATUS_CONTA_RECEBER")
+                DATA_INCLUSAO = dr("DATA_INCLUSAO")
                 If Not IsDBNull(dr("OBS_CONTA_RECEBER")) Then OBS_CONTA_RECEBER = dr("OBS_CONTA_RECEBER")
                 retorno = True
             End While

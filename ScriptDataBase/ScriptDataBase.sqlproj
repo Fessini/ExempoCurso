@@ -59,6 +59,7 @@
     <Folder Include="dbo\" />
     <Folder Include="dbo\Tables\" />
     <Folder Include="dbo\Stored Procedures\" />
+    <Folder Include="dbo\Views\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\CAD_CLIENTE.sql" />
@@ -92,5 +93,7 @@
     <Build Include="dbo\Stored Procedures\PR_BUSCA_PARCELAS_CONTA_PAGAR_ITEM.sql" />
     <Build Include="dbo\Stored Procedures\PR_ATUALIZA_CONTA_PAGAR_ITEM.sql" />
     <Build Include="dbo\Stored Procedures\PR_ATUALIZA_CONTA_PAGAR.sql" />
+    <Build Include="dbo\Views\VW_PARCELA_RECEBER.sql" />
+    <Build Include="dbo\Stored Procedures\PR_BUSCA_MOV_CONTA_RECEBER.sql" />
   </ItemGroup>
 </Project>

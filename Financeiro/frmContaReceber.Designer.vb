@@ -22,7 +22,10 @@ Partial Class frmContaReceber
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.tsPrincipal = New System.Windows.Forms.ToolStrip()
         Me.tsbIncluir = New System.Windows.Forms.ToolStripButton()
         Me.tsbEditar = New System.Windows.Forms.ToolStripButton()
@@ -71,12 +74,14 @@ Partial Class frmContaReceber
         Me.dgvParcelas = New System.Windows.Forms.DataGridView()
         Me.ssPrincipal = New System.Windows.Forms.StatusStrip()
         Me.tsslAtalho = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.epValida = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.colIdMovItem = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colCodigoContaReceber = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colNumero = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colValor = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colVencimento = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colCodigoContaBanco = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colCodBanco = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colPagamento = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.tsPrincipal.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -85,6 +90,7 @@ Partial Class frmContaReceber
         Me.GroupBox2.SuspendLayout()
         CType(Me.dgvParcelas, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ssPrincipal.SuspendLayout()
+        CType(Me.epValida, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'tsPrincipal
@@ -566,7 +572,7 @@ Partial Class frmContaReceber
         Me.dgvParcelas.AllowUserToAddRows = False
         Me.dgvParcelas.AllowUserToDeleteRows = False
         Me.dgvParcelas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvParcelas.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colIdMovItem, Me.colCodigoContaReceber, Me.colNumero, Me.colValor, Me.colVencimento, Me.colCodigoContaBanco, Me.colPagamento})
+        Me.dgvParcelas.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colIdMovItem, Me.colCodigoContaReceber, Me.colNumero, Me.colValor, Me.colVencimento, Me.colCodigoContaBanco, Me.colCodBanco, Me.colPagamento})
         Me.dgvParcelas.Enabled = False
         Me.dgvParcelas.Location = New System.Drawing.Point(6, 48)
         Me.dgvParcelas.Name = "dgvParcelas"
@@ -589,6 +595,10 @@ Partial Class frmContaReceber
         Me.tsslAtalho.Name = "tsslAtalho"
         Me.tsslAtalho.Size = New System.Drawing.Size(375, 17)
         Me.tsslAtalho.Text = "Incluir - F2 | Editar - F3 | Consultar - F4 | Gravar - F5 | Cancelar - Esc"
+        '
+        'epValida
+        '
+        Me.epValida.ContainerControl = Me
         '
         'colIdMovItem
         '
@@ -627,20 +637,33 @@ Partial Class frmContaReceber
         'colVencimento
         '
         Me.colVencimento.DataPropertyName = "DATA_VENCIMENTO_RECEBER"
+        DataGridViewCellStyle2.Format = "d"
+        DataGridViewCellStyle2.NullValue = Nothing
+        Me.colVencimento.DefaultCellStyle = DataGridViewCellStyle2
         Me.colVencimento.HeaderText = "Vencimento"
         Me.colVencimento.Name = "colVencimento"
         Me.colVencimento.ReadOnly = True
         '
         'colCodigoContaBanco
         '
-        Me.colCodigoContaBanco.DataPropertyName = "CODIGO_CONTA_BANCO"
+        Me.colCodigoContaBanco.DataPropertyName = "NOME_BANCO"
         Me.colCodigoContaBanco.HeaderText = "Banco"
         Me.colCodigoContaBanco.Name = "colCodigoContaBanco"
         Me.colCodigoContaBanco.ReadOnly = True
         '
+        'colCodBanco
+        '
+        Me.colCodBanco.DataPropertyName = "ID_CONTA_BANCO"
+        Me.colCodBanco.HeaderText = "CodBanco"
+        Me.colCodBanco.Name = "colCodBanco"
+        Me.colCodBanco.ReadOnly = True
+        Me.colCodBanco.Visible = False
+        '
         'colPagamento
         '
         Me.colPagamento.DataPropertyName = "DATA_PAGAMENTO_RECEBER"
+        DataGridViewCellStyle3.Format = "d"
+        Me.colPagamento.DefaultCellStyle = DataGridViewCellStyle3
         Me.colPagamento.HeaderText = "Pagamento"
         Me.colPagamento.Name = "colPagamento"
         Me.colPagamento.ReadOnly = True
@@ -669,6 +692,7 @@ Partial Class frmContaReceber
         CType(Me.dgvParcelas, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ssPrincipal.ResumeLayout(False)
         Me.ssPrincipal.PerformLayout()
+        CType(Me.epValida, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -722,11 +746,13 @@ Partial Class frmContaReceber
     Friend WithEvents ssPrincipal As Windows.Forms.StatusStrip
     Friend WithEvents tsslAtalho As Windows.Forms.ToolStripStatusLabel
     Friend WithEvents btnGeraParcela As Windows.Forms.Button
+    Friend WithEvents epValida As Windows.Forms.ErrorProvider
     Friend WithEvents colIdMovItem As Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents colCodigoContaReceber As Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents colNumero As Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents colValor As Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents colVencimento As Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents colCodigoContaBanco As Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents colCodBanco As Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents colPagamento As Windows.Forms.DataGridViewTextBoxColumn
 End Class

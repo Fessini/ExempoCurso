@@ -1,10 +1,9 @@
-﻿
--- =============================================
+﻿-- =============================================
 -- Author:		<Author,,Name>
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-CREATE PROCEDURE [dbo].[PR_BUSCA_PARCELAS_CONTA_RECEBER_ITEM]
+CREATE PROCEDURE PR_BUSCA_MOV_CONTA_RECEBER
 	-- Add the parameters for the stored procedure here
 	@ID_CONTA_RECEBER INT
 AS
@@ -14,5 +13,5 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	SELECT * FROM VW_PARCELA_RECEBER WHERE CODIGO_CONTA_RECEBER = @ID_CONTA_RECEBER
+	SELECT * FROM MOV_CONTA_RECEBER WHERE ID_CONTA_RECEBER = @ID_CONTA_RECEBER
 END
