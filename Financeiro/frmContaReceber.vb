@@ -21,6 +21,25 @@ Public Class frmContaReceber
 #End Region
 
 #Region "Métodos"
+    Private Sub AtualizaGrid()
+        'PESQUISA AS PARCELAS
+        Pesq = dtParcelas.Select("STATUS <> 'D' OR STATUS IS NULL")
+        '
+        'EXIBINDO POR LISTA
+        ParcelasReceber.Clear()
+        For Each Linha As DataRow In Pesq
+            Dim nova As New PARCELA_CONTA_RECEBER
+            nova.VALOR_PARCELA_RECEBER = Linha.Item("VALOR_PARCELA_RECEBER")
+            nova.NUMERO_PARCELA_RECEBER = Linha.Item("NUMERO_PARCELA_RECEBER")
+            nova.DATA_VENCIMENTO_RECEBER = Linha.Item("DATA_VENCIMENTO_RECEBER")
+            If Not IsDBNull(Linha.Item("NOME_BANCO")) Then nova.NOME_BANCO = Linha.Item("NOME_BANCO")
+            ParcelasReceber.Add(nova)
+        Next
+        dgvParcelas.DataSource = Nothing
+        dgvParcelas.AutoGenerateColumns = False
+        dgvParcelas.DataSource = ParcelasReceber
+        dgvParcelas.Refresh()
+    End Sub
     Private Sub GeraParcelas()
         Dim dtData As Date = dtpVencimento.Value
         Dim dblValorParcela As Double = Math.Round(Convert.ToDouble(txtValor.Text) / Convert.ToInt32(txtQtdParcelas.Text), 2)
@@ -64,6 +83,7 @@ Public Class frmContaReceber
             nova.VALOR_PARCELA_RECEBER = Linha.Item("VALOR_PARCELA_RECEBER")
             nova.NUMERO_PARCELA_RECEBER = Linha.Item("NUMERO_PARCELA_RECEBER")
             nova.DATA_VENCIMENTO_RECEBER = Linha.Item("DATA_VENCIMENTO_RECEBER")
+            If Not IsDBNull(Linha.Item("NOME_BANCO")) Then nova.NOME_BANCO = Linha.Item("NOME_BANCO")
             ParcelasReceber.Add(nova)
         Next
         '
@@ -92,6 +112,7 @@ Public Class frmContaReceber
         dtParcelas.Columns.Add("DATA_PAGAMENTO_RECEBER", GetType(Date))
         dtParcelas.Columns.Add("DATA_VENCIMENTO_RECEBER", GetType(Date))
         dtParcelas.Columns.Add("NUMERO_PARCELA_RECEBER", GetType(Integer))
+        dtParcelas.Columns.Add("NOME_BANCO", GetType(String))
         dtParcelas.Columns.Add("STATUS", GetType(String))
         'dtView = dtParcelas.Copy
     End Sub
@@ -152,6 +173,7 @@ Public Class frmContaReceber
         AtivaDesativa(True)
         '
         txtCliente.Focus()
+        rbAtivo.Checked = True
     End Sub
 
     Private Sub tsbEditar_Click(sender As Object, e As EventArgs) Handles tsbEditar.Click
@@ -266,6 +288,7 @@ Public Class frmContaReceber
         'DECLARA CLASSES
         Dim objConta As MOV_CONTA_RECEBER
         Dim blnValida As Boolean = True
+        Dim dblValor As Double
 
         Try
             'FAZ A VALIDAÇÃO
@@ -294,10 +317,18 @@ Public Class frmContaReceber
                 epValida.SetError(btnGeraParcela, "Favor gerar pelo menos uma parcela.")
                 blnValida = False
             End If
+            'For Each Linha As DataGridViewRow In dgvParcelas.Rows
+            '    dblValor += Linha.Cells("colValor").Value
+            'Next
+            'If dblValor <> Convert.ToDouble(txtValor.Text) Then
+            '    MessageBox.Show("Valor das parcelas não confere com o valor do documento.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            '    blnValida = False
+            'End If
             If blnValida = False Then Exit Sub
             '
             'INSTANCIA A CLASSE
             objConta = New MOV_CONTA_RECEBER
+            If txtDocumento.TextLength > 0 Then objConta.ID_CONTA_RECEBER = Convert.ToInt32(txtDocumento.Text)
             objConta.CODIGO_CLIENTE = Convert.ToInt32(txtCliente.Text)
             objConta.DATA_EMISSAO_RECEBER = dtpEmissao.Value
             objConta.DATA_VENCIMENTO_RECEBER = dtpVencimento.Value
@@ -317,6 +348,11 @@ Public Class frmContaReceber
                         MessageBox.Show("Documento incluído com sucesso!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information)
                     End If
                 Case Opcao.Editar
+                    If objConta.AtualizaConta = True Then
+                        If objConta.ManipulaParcelas(dtParcelas, Convert.ToInt32(txtDocumento.Text) = True) Then
+                            MessageBox.Show("Documento atualizado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        End If
+                    End If
             End Select
         Catch ex As Exception
             TrataErro("Problema ao tentar gravar documento.", ex)
@@ -347,22 +383,9 @@ Public Class frmContaReceber
                     'BUSCA DAS PARCELAS
                     dtParcelas = objDocumento.BuscaParcelas(Convert.ToInt32(txtDocumento.Text))
                     dtParcelas.Columns.Add("STATUS", GetType(String))
-                    'PESQUISA AS PARCELAS
-                    Pesq = dtParcelas.Select("STATUS <> 'D' OR STATUS IS NULL")
                     '
-                    'EXIBINDO POR LISTA
-                    ParcelasReceber.Clear()
-                    For Each Linha As DataRow In Pesq
-                        Dim nova As New PARCELA_CONTA_RECEBER
-                        nova.VALOR_PARCELA_RECEBER = Linha.Item("VALOR_PARCELA_RECEBER")
-                        nova.NUMERO_PARCELA_RECEBER = Linha.Item("NUMERO_PARCELA_RECEBER")
-                        nova.DATA_VENCIMENTO_RECEBER = Linha.Item("DATA_VENCIMENTO_RECEBER")
-                        If Not IsDBNull(Linha.Item("NOME_BANCO")) Then nova.NOME_BANCO = Linha.Item("NOME_BANCO")
-                        ParcelasReceber.Add(nova)
-                    Next
-                    dgvParcelas.AutoGenerateColumns = False
-                    dgvParcelas.DataSource = ParcelasReceber
-                    dgvParcelas.Refresh()
+                    'ATUALIZA O GRID
+                    AtualizaGrid()
 
                     If intOpcao = Opcao.Editar Then
                         AtivaDesativa(True)
@@ -375,5 +398,45 @@ Public Class frmContaReceber
                 TrataErro("Problema ao tentar carregar documento.", ex)
             End Try
         End If
+    End Sub
+
+    Private Sub btnRemover_Click(sender As Object, e As EventArgs) Handles btnRemover.Click
+        Try
+            If dgvParcelas.RowCount > 0 Then
+                If Not String.IsNullOrEmpty(dgvParcelas.CurrentRow.Cells("colPagamento").Value) Then
+                    MessageBox.Show("Não é permitido remover parcelas pagas.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Exit Sub
+                End If
+                If MessageBox.Show("Deseja apagar a parcela selecionada?", "Atenção",
+                                 MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2) = DialogResult.Yes Then
+                    Dim index As Integer = 0
+                    Pesq = dtParcelas.Select("(STATUS <> 'D' OR STATUS IS NULL) AND NUMERO_PARCELA_RECEBER = " & dgvParcelas.CurrentRow.Cells("colNumero").Value)
+                    If IsDBNull(Pesq(0).Item("ID_MOV_CONTA_ITEM")) Then
+                        dtParcelas.Rows.Remove(Pesq(0))
+                    Else
+                        Pesq(0).Item("STATUS") = "D"
+                    End If
+                    For Each Linha As DataRow In dtParcelas.Rows
+                        If Not IsDBNull(Linha.Item("STATUS")) Then
+                            If Linha.Item("STATUS") <> "D" Then
+                                index += 1
+                                Linha.Item("NUMERO_PARCELA_RECEBER") = index
+                                If Linha.Item("STATUS") <> "I" Then Linha.Item("STATUS") = "E"
+                            End If
+                        Else
+                            index += 1
+                            Linha.Item("NUMERO_PARCELA_RECEBER") = index
+                            Linha.Item("STATUS") = "E"
+                        End If
+                    Next
+                    dtParcelas.AcceptChanges()
+                    'ATUALIZA O GRID
+                    AtualizaGrid()
+                End If
+            End If
+
+        Catch ex As Exception
+            TrataErro("Problema ao tentar remover parcela.", ex)
+        End Try
     End Sub
 End Class

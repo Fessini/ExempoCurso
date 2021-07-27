@@ -138,7 +138,7 @@ Public Class MOV_CONTA_RECEBER
             If OBS_CONTA_RECEBER.Length > 0 Then par.Add(New SqlParameter("@OBS_CONTA_RECEBER", OBS_CONTA_RECEBER))
             '
             'EXECUTRA A PROCEDURE
-            retorno = banco.ExecuteStoreProcedureRetorno("PR_ATUALIZA_CONTA_RECEBER", par)
+            retorno = banco.ExecuteStoreProcedure("PR_ATUALIZA_CONTA_RECEBER", par)
             '
             'FECHAR A CONEXÃO
             banco.CloseConn()
@@ -150,7 +150,7 @@ Public Class MOV_CONTA_RECEBER
         End Try
     End Function
 
-    Public Function ManipulaParcelas(ByVal parcelas As DataTable) As Boolean
+    Public Function ManipulaParcelas(ByVal parcelas As DataTable, ByVal idDocumento As Integer) As Boolean
         Dim retorno As Boolean
         Dim par As List(Of SqlParameter)
         Dim banco As DataAccess
@@ -162,26 +162,29 @@ Public Class MOV_CONTA_RECEBER
             For Each Linha As DataRow In parcelas.Rows
                 par = Nothing
                 par = New List(Of SqlParameter)
-                par.Add(New SqlParameter("@CODIGO_CONTA_RECEBER", banco.RetornoValor))
-                par.Add(New SqlParameter("@VALOR_PARCELA_RECEBER", Linha.Item("VALOR_PARCELA_RECEBER")))
-                par.Add(New SqlParameter("@DATA_VENCIMENTO_RECEBER", Linha.Item("DATA_VENCIMENTO_RECEBER")))
-                par.Add(New SqlParameter("@NUMERO_PARCELA_RECEBER", Linha.Item("NUMERO_PARCELA_RECEBER")))
+                If Not IsDBNull(Linha.Item("ID_MOV_CONTA_ITEM")) Then par.Add(New SqlParameter("@ID_MOV_CONTA_ITEM", Linha.Item("ID_MOV_CONTA_ITEM")))
+
                 If Not IsDBNull(Linha.Item("STATUS")) Then
                     If Linha.Item("STATUS") = "I" Then
                         'EXECUTRA A PROCEDURE
+                        par.Add(New SqlParameter("@VALOR_PARCELA_RECEBER", Linha.Item("VALOR_PARCELA_RECEBER")))
+                        par.Add(New SqlParameter("@DATA_VENCIMENTO_RECEBER", Linha.Item("DATA_VENCIMENTO_RECEBER")))
+                        par.Add(New SqlParameter("@NUMERO_PARCELA_RECEBER", Linha.Item("NUMERO_PARCELA_RECEBER")))
+                        par.Add(New SqlParameter("@CODIGO_CONTA_RECEBER", idDocumento))
                         retorno = banco.ExecuteStoreProcedure("PR_NOVO_CONTA_RECEBER_ITEM", par)
                         If retorno = False Then Exit For
                     ElseIf Linha.Item("STATUS") = "E" Then
-                        par.Add(New SqlParameter("@ID_MOV_CONTA_ITEM", ID_MOV_CONTA_ITEM))
-                        par.Add(New SqlParameter("@CODIGO_CONTA_BANCO", CODIGO_CONTA_BANCO))
+                        par.Add(New SqlParameter("@VALOR_PARCELA_RECEBER", Linha.Item("VALOR_PARCELA_RECEBER")))
+                        par.Add(New SqlParameter("@DATA_VENCIMENTO_RECEBER", Linha.Item("DATA_VENCIMENTO_RECEBER")))
+                        par.Add(New SqlParameter("@NUMERO_PARCELA_RECEBER", Linha.Item("NUMERO_PARCELA_RECEBER")))
+                        If CODIGO_CONTA_BANCO > 0 Then par.Add(New SqlParameter("@CODIGO_CONTA_BANCO", CODIGO_CONTA_BANCO))
                         par.Add(New SqlParameter("@DATA_PAGAMENTO_RECEBER", DATA_PAGAMENTO_RECEBER))
                         'EXECUTRA A PROCEDURE
                         retorno = banco.ExecuteStoreProcedure("PR_ATUALIZA_CONTA_RECEBER_ITEM", par)
                         If retorno = False Then Exit For
                     ElseIf Linha.Item("STATUS") = "D" Then
-                        par.Add(New SqlParameter("@ID_MOV_CONTA_ITEM", ID_MOV_CONTA_ITEM))
                         'EXECUTRA A PROCEDURE
-                        retorno = banco.ExecuteStoreProcedure("PR_DELETA_CONTA_RECEBER_ITEM", par)
+                        retorno = banco.ExecuteStoreProcedure("PR_DELETE_CONTA_RECEBER_ITEM", par)
                         If retorno = False Then Exit For
                     End If
                 End If

@@ -1,4 +1,5 @@
 ﻿
+
 -- =============================================
 -- Author:		<Author,,Name>
 -- Create date: <Create Date,,>
@@ -7,7 +8,6 @@
 CREATE PROCEDURE [dbo].[PR_ATUALIZA_CONTA_RECEBER_ITEM]
 	-- Add the parameters for the stored procedure here
 	@ID_MOV_CONTA_ITEM INT,
-	@CODIGO_CONTA_RECEBER INT,
 	@CODIGO_CONTA_BANCO INT = NULL,
 	@VALOR_PARCELA_RECEBER FLOAT,
 	@DATA_PAGAMENTO_RECEBER DATETIME = NULL,
@@ -22,7 +22,6 @@ BEGIN
 
     -- Insert statements for procedure here
 	UPDATE MOV_CONTA_RECEBER_ITEM SET
-		CODIGO_CONTA_RECEBER = @CODIGO_CONTA_RECEBER,
 		CODIGO_CONTA_BANCO = @CODIGO_CONTA_BANCO,
 		VALOR_PARCELA_RECEBER = @VALOR_PARCELA_RECEBER,
 		DATA_PAGAMENTO_RECEBER = @DATA_PAGAMENTO_RECEBER,
