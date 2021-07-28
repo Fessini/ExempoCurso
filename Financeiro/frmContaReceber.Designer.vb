@@ -23,9 +23,9 @@ Partial Class frmContaReceber
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.tsPrincipal = New System.Windows.Forms.ToolStrip()
         Me.tsbIncluir = New System.Windows.Forms.ToolStripButton()
         Me.tsbEditar = New System.Windows.Forms.ToolStripButton()
@@ -606,10 +606,10 @@ Partial Class frmContaReceber
         'colValor
         '
         Me.colValor.DataPropertyName = "VALOR_PARCELA_RECEBER"
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopRight
-        DataGridViewCellStyle1.Format = "N2"
-        DataGridViewCellStyle1.NullValue = Nothing
-        Me.colValor.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopRight
+        DataGridViewCellStyle4.Format = "N2"
+        DataGridViewCellStyle4.NullValue = Nothing
+        Me.colValor.DefaultCellStyle = DataGridViewCellStyle4
         Me.colValor.HeaderText = "Valor"
         Me.colValor.Name = "colValor"
         Me.colValor.ReadOnly = True
@@ -617,9 +617,9 @@ Partial Class frmContaReceber
         'colVencimento
         '
         Me.colVencimento.DataPropertyName = "DATA_VENCIMENTO_RECEBER"
-        DataGridViewCellStyle2.Format = "d"
-        DataGridViewCellStyle2.NullValue = Nothing
-        Me.colVencimento.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle5.Format = "d"
+        DataGridViewCellStyle5.NullValue = Nothing
+        Me.colVencimento.DefaultCellStyle = DataGridViewCellStyle5
         Me.colVencimento.HeaderText = "Vencimento"
         Me.colVencimento.Name = "colVencimento"
         Me.colVencimento.ReadOnly = True
@@ -642,8 +642,8 @@ Partial Class frmContaReceber
         'colPagamento
         '
         Me.colPagamento.DataPropertyName = "DATA_PAGAMENTO_RECEBER"
-        DataGridViewCellStyle3.Format = "d"
-        Me.colPagamento.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle6.Format = "d"
+        Me.colPagamento.DefaultCellStyle = DataGridViewCellStyle6
         Me.colPagamento.HeaderText = "Pagamento"
         Me.colPagamento.Name = "colPagamento"
         Me.colPagamento.ReadOnly = True
