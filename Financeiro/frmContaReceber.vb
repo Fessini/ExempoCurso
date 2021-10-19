@@ -145,10 +145,15 @@ Public Class frmContaReceber
         txtNumero.Enabled = status
         txtValor.Enabled = status
         txtObs.Enabled = status
-        txtQtdParcelas.Enabled = status
-        txtIntervalo.Enabled = status
-        ckbMesmoDia.Enabled = status
-        btnGeraParcela.Enabled = status
+
+        If intOpcao <> Opcao.Editar Then
+            txtQtdParcelas.Enabled = status
+            txtIntervalo.Enabled = status
+            ckbMesmoDia.Enabled = status
+            btnGeraParcela.Enabled = status
+            btnAddParcela.Enabled = status
+        End If
+
         rbAtivo.Enabled = status
         rbInativo.Enabled = status
         btnEstornar.Enabled = status
@@ -317,13 +322,13 @@ Public Class frmContaReceber
                 epValida.SetError(btnGeraParcela, "Favor gerar pelo menos uma parcela.")
                 blnValida = False
             End If
-            'For Each Linha As DataGridViewRow In dgvParcelas.Rows
-            '    dblValor += Linha.Cells("colValor").Value
-            'Next
-            'If dblValor <> Convert.ToDouble(txtValor.Text) Then
-            '    MessageBox.Show("Valor das parcelas não confere com o valor do documento.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            '    blnValida = False
-            'End If
+            For Each Linha As DataGridViewRow In dgvParcelas.Rows
+                dblValor += Linha.Cells("colValor").Value
+            Next
+            If dblValor <> Convert.ToDouble(txtValor.Text) Then
+                MessageBox.Show("Valor das parcelas não confere com o valor do documento.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                blnValida = False
+            End If
             If blnValida = False Then Exit Sub
             '
             'INSTANCIA A CLASSE
@@ -349,7 +354,7 @@ Public Class frmContaReceber
                     End If
                 Case Opcao.Editar
                     If objConta.AtualizaConta = True Then
-                        If objConta.ManipulaParcelas(dtParcelas, Convert.ToInt32(txtDocumento.Text) = True) Then
+                        If objConta.ManipulaParcelas(dtParcelas, Convert.ToInt32(txtDocumento.Text)) Then
                             MessageBox.Show("Documento atualizado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information)
                         End If
                     End If
@@ -390,6 +395,7 @@ Public Class frmContaReceber
                     If intOpcao = Opcao.Editar Then
                         AtivaDesativa(True)
                         tsbGravar.Enabled = True
+                        btnAddParcela.Enabled = True
                     End If
                 Else
                     MessageBox.Show("Documento não encontrado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -438,5 +444,24 @@ Public Class frmContaReceber
         Catch ex As Exception
             TrataErro("Problema ao tentar remover parcela.", ex)
         End Try
+    End Sub
+
+    Private Sub btnAddParcela_Click(sender As Object, e As EventArgs) Handles btnAddParcela.Click
+        Dim dblValor, dblDif As Double
+        For Each Linha As DataGridViewRow In dgvParcelas.Rows
+            dblValor += Linha.Cells("colValor").Value
+        Next
+        If dblValor <> Convert.ToDouble(txtValor.Text) Then
+            dblDif = Convert.ToDouble(txtValor.Text) - dblValor
+            Using frm As New frmAdionaParcela With {
+            .NumeroParcela = dgvParcelas.Rows(dgvParcelas.Rows.Count - 1).Cells("colNumero").Value,
+            .Parcelas = dtParcelas,
+            .Valor = dblDif,
+            .DataVenc = CDate(dgvParcelas.Rows(dgvParcelas.Rows.Count - 1).Cells("colVencimento").Value)}
+                frm.ShowDialog()
+                AtualizaGrid()
+            End Using
+        End If
+
     End Sub
 End Class

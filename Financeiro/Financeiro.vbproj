@@ -66,6 +66,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmAdionaParcela.Designer.vb">
+      <DependentUpon>frmAdionaParcela.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmAdionaParcela.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmContaReceber.Designer.vb">
       <DependentUpon>frmContaReceber.vb</DependentUpon>
     </Compile>
@@ -89,6 +95,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="frmAdionaParcela.resx">
+      <DependentUpon>frmAdionaParcela.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmContaReceber.resx">
       <DependentUpon>frmContaReceber.vb</DependentUpon>
     </EmbeddedResource>

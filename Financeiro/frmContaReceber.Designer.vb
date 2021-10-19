@@ -40,7 +40,7 @@ Partial Class frmContaReceber
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
         Me.rbInativo = New System.Windows.Forms.RadioButton()
         Me.rbAtivo = New System.Windows.Forms.RadioButton()
-        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.gbParcela = New System.Windows.Forms.GroupBox()
         Me.btnGeraParcela = New System.Windows.Forms.Button()
         Me.ckbMesmoDia = New System.Windows.Forms.CheckBox()
         Me.txtIntervalo = New Controls.CursoTextBox()
@@ -83,10 +83,11 @@ Partial Class frmContaReceber
         Me.ssPrincipal = New System.Windows.Forms.StatusStrip()
         Me.tsslAtalho = New System.Windows.Forms.ToolStripStatusLabel()
         Me.epValida = New System.Windows.Forms.ErrorProvider(Me.components)
+        Me.btnAddParcela = New System.Windows.Forms.Button()
         Me.tsPrincipal.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
-        Me.GroupBox3.SuspendLayout()
+        Me.gbParcela.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         CType(Me.dgvParcelas, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ssPrincipal.SuspendLayout()
@@ -189,7 +190,7 @@ Partial Class frmContaReceber
         'GroupBox1
         '
         Me.GroupBox1.Controls.Add(Me.GroupBox4)
-        Me.GroupBox1.Controls.Add(Me.GroupBox3)
+        Me.GroupBox1.Controls.Add(Me.gbParcela)
         Me.GroupBox1.Controls.Add(Me.dtpInclusao)
         Me.GroupBox1.Controls.Add(Me.Label8)
         Me.GroupBox1.Controls.Add(Me.lblObs)
@@ -252,20 +253,20 @@ Partial Class frmContaReceber
         Me.rbAtivo.Text = "Ativo"
         Me.rbAtivo.UseVisualStyleBackColor = True
         '
-        'GroupBox3
+        'gbParcela
         '
-        Me.GroupBox3.Controls.Add(Me.btnGeraParcela)
-        Me.GroupBox3.Controls.Add(Me.ckbMesmoDia)
-        Me.GroupBox3.Controls.Add(Me.txtIntervalo)
-        Me.GroupBox3.Controls.Add(Me.Label10)
-        Me.GroupBox3.Controls.Add(Me.txtQtdParcelas)
-        Me.GroupBox3.Controls.Add(Me.Label9)
-        Me.GroupBox3.Location = New System.Drawing.Point(414, 48)
-        Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(161, 119)
-        Me.GroupBox3.TabIndex = 20
-        Me.GroupBox3.TabStop = False
-        Me.GroupBox3.Text = "Parcelar"
+        Me.gbParcela.Controls.Add(Me.btnGeraParcela)
+        Me.gbParcela.Controls.Add(Me.ckbMesmoDia)
+        Me.gbParcela.Controls.Add(Me.txtIntervalo)
+        Me.gbParcela.Controls.Add(Me.Label10)
+        Me.gbParcela.Controls.Add(Me.txtQtdParcelas)
+        Me.gbParcela.Controls.Add(Me.Label9)
+        Me.gbParcela.Location = New System.Drawing.Point(414, 48)
+        Me.gbParcela.Name = "gbParcela"
+        Me.gbParcela.Size = New System.Drawing.Size(161, 119)
+        Me.gbParcela.TabIndex = 20
+        Me.gbParcela.TabStop = False
+        Me.gbParcela.Text = "Parcelar"
         '
         'btnGeraParcela
         '
@@ -520,6 +521,7 @@ Partial Class frmContaReceber
         '
         'GroupBox2
         '
+        Me.GroupBox2.Controls.Add(Me.btnAddParcela)
         Me.GroupBox2.Controls.Add(Me.btnEstornar)
         Me.GroupBox2.Controls.Add(Me.btnRemover)
         Me.GroupBox2.Controls.Add(Me.btnBaixar)
@@ -535,7 +537,7 @@ Partial Class frmContaReceber
         '
         Me.btnEstornar.Enabled = False
         Me.btnEstornar.Image = Global.Financeiro.My.Resources.Resources.icone_estornar_parcela
-        Me.btnEstornar.Location = New System.Drawing.Point(218, 19)
+        Me.btnEstornar.Location = New System.Drawing.Point(97, 19)
         Me.btnEstornar.Name = "btnEstornar"
         Me.btnEstornar.Size = New System.Drawing.Size(115, 23)
         Me.btnEstornar.TabIndex = 3
@@ -547,7 +549,7 @@ Partial Class frmContaReceber
         '
         Me.btnRemover.Enabled = False
         Me.btnRemover.Image = Global.Financeiro.My.Resources.Resources.icone_remover_parcela
-        Me.btnRemover.Location = New System.Drawing.Point(460, 19)
+        Me.btnRemover.Location = New System.Drawing.Point(339, 19)
         Me.btnRemover.Name = "btnRemover"
         Me.btnRemover.Size = New System.Drawing.Size(115, 23)
         Me.btnRemover.TabIndex = 2
@@ -559,7 +561,7 @@ Partial Class frmContaReceber
         '
         Me.btnBaixar.Enabled = False
         Me.btnBaixar.Image = Global.Financeiro.My.Resources.Resources.icone_baixar_parcela
-        Me.btnBaixar.Location = New System.Drawing.Point(339, 19)
+        Me.btnBaixar.Location = New System.Drawing.Point(218, 19)
         Me.btnBaixar.Name = "btnBaixar"
         Me.btnBaixar.Size = New System.Drawing.Size(115, 23)
         Me.btnBaixar.TabIndex = 1
@@ -668,6 +670,18 @@ Partial Class frmContaReceber
         '
         Me.epValida.ContainerControl = Me
         '
+        'btnAddParcela
+        '
+        Me.btnAddParcela.Enabled = False
+        Me.btnAddParcela.Image = Global.Financeiro.My.Resources.Resources.icone_remover_parcela
+        Me.btnAddParcela.Location = New System.Drawing.Point(460, 19)
+        Me.btnAddParcela.Name = "btnAddParcela"
+        Me.btnAddParcela.Size = New System.Drawing.Size(115, 23)
+        Me.btnAddParcela.TabIndex = 4
+        Me.btnAddParcela.Text = "Adicionar"
+        Me.btnAddParcela.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+        Me.btnAddParcela.UseVisualStyleBackColor = True
+        '
         'frmContaReceber
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -686,8 +700,8 @@ Partial Class frmContaReceber
         Me.GroupBox1.PerformLayout()
         Me.GroupBox4.ResumeLayout(False)
         Me.GroupBox4.PerformLayout()
-        Me.GroupBox3.ResumeLayout(False)
-        Me.GroupBox3.PerformLayout()
+        Me.gbParcela.ResumeLayout(False)
+        Me.gbParcela.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)
         CType(Me.dgvParcelas, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ssPrincipal.ResumeLayout(False)
@@ -730,7 +744,7 @@ Partial Class frmContaReceber
     Friend WithEvents btnPesqCliente As Windows.Forms.Button
     Friend WithEvents txtCliente As Controls.CursoTextBox
     Friend WithEvents Label2 As Windows.Forms.Label
-    Friend WithEvents GroupBox3 As Windows.Forms.GroupBox
+    Friend WithEvents gbParcela As Windows.Forms.GroupBox
     Friend WithEvents ckbMesmoDia As Windows.Forms.CheckBox
     Friend WithEvents txtIntervalo As Controls.CursoTextBox
     Friend WithEvents Label10 As Windows.Forms.Label
@@ -755,4 +769,5 @@ Partial Class frmContaReceber
     Friend WithEvents colCodigoContaBanco As Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents colCodBanco As Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents colPagamento As Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents btnAddParcela As Windows.Forms.Button
 End Class
