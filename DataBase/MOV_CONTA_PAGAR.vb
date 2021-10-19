@@ -18,6 +18,7 @@ Public Class MOV_CONTA_PAGAR
     Public Property DATA_PAGAMENTO_PAGAR As Object = Nothing
     Public Property DATA_VENCIMENTO_PAGAR As Object = Nothing
     Public Property NUMERO_PARCELA_PAGAR As Integer
+    Public Property VALOR_PAGO As Double
 #End Region
 
 #Region "Constantes"
@@ -167,8 +168,10 @@ Public Class MOV_CONTA_PAGAR
                         If retorno = False Then Exit For
                     ElseIf Linha.Item("STATUS") = "E" Then
                         par.Add(New SqlParameter("@ID_MOV_CONTA_ITEM", ID_MOV_CONTA_ITEM))
-                        par.Add(New SqlParameter("@CODIGO_CONTA_BANCO", CODIGO_CONTA_BANCO))
-                        par.Add(New SqlParameter("@DATA_PAGAMENTO_PAGAR", DATA_PAGAMENTO_PAGAR))
+                        If CODIGO_CONTA_BANCO > 0 Then par.Add(New SqlParameter("@CODIGO_CONTA_BANCO", CODIGO_CONTA_BANCO))
+                        par.Add(New SqlParameter("@VALOR_PARCELA_PAGAR", Linha.Item("VALOR_PARCELA_PAGAR")))
+                        If DATA_PAGAMENTO_PAGAR <> Nothing Then par.Add(New SqlParameter("@DATA_PAGAMENTO_PAGAR", DATA_PAGAMENTO_PAGAR))
+                        If VALOR_PAGO > 0 Then par.Add(New SqlParameter("@VALOR_PAGO", VALOR_PAGO))
                         'EXECUTRA A PROCEDURE
                         retorno = banco.ExecuteStoreProcedure("PR_ATUALIZA_CONTA_PAGAR_ITEM", par)
                         If retorno = False Then Exit For

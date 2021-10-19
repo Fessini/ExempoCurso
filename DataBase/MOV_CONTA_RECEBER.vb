@@ -20,6 +20,7 @@ Public Class MOV_CONTA_RECEBER
     Public Property DATA_PAGAMENTO_RECEBER As Object = Nothing
     Public Property DATA_VENCIMENTO_RECEBER As Object = Nothing
     Public Property NUMERO_PARCELA_RECEBER As Integer
+    Public Property VALOR_RECEBIDO As Double
 #End Region
 
 #Region "Constantes"
@@ -177,8 +178,9 @@ Public Class MOV_CONTA_RECEBER
                         par.Add(New SqlParameter("@VALOR_PARCELA_RECEBER", Linha.Item("VALOR_PARCELA_RECEBER")))
                         par.Add(New SqlParameter("@DATA_VENCIMENTO_RECEBER", Linha.Item("DATA_VENCIMENTO_RECEBER")))
                         par.Add(New SqlParameter("@NUMERO_PARCELA_RECEBER", Linha.Item("NUMERO_PARCELA_RECEBER")))
+                        If VALOR_RECEBIDO > 0 Then par.Add(New SqlParameter("@VALOR_RECEBIDO", Linha.Item("VALOR_RECEBIDO")))
                         If CODIGO_CONTA_BANCO > 0 Then par.Add(New SqlParameter("@CODIGO_CONTA_BANCO", CODIGO_CONTA_BANCO))
-                        par.Add(New SqlParameter("@DATA_PAGAMENTO_RECEBER", DATA_PAGAMENTO_RECEBER))
+                        If DATA_PAGAMENTO_RECEBER <> Nothing Then par.Add(New SqlParameter("@DATA_PAGAMENTO_RECEBER", DATA_PAGAMENTO_RECEBER))
                         'EXECUTRA A PROCEDURE
                         retorno = banco.ExecuteStoreProcedure("PR_ATUALIZA_CONTA_RECEBER_ITEM", par)
                         If retorno = False Then Exit For
