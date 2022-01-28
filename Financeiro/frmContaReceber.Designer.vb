@@ -68,6 +68,7 @@ Partial Class frmContaReceber
         Me.txtDocumento = New Controls.CursoTextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.btnAddParcela = New System.Windows.Forms.Button()
         Me.btnEstornar = New System.Windows.Forms.Button()
         Me.btnRemover = New System.Windows.Forms.Button()
         Me.btnBaixar = New System.Windows.Forms.Button()
@@ -83,7 +84,6 @@ Partial Class frmContaReceber
         Me.ssPrincipal = New System.Windows.Forms.StatusStrip()
         Me.tsslAtalho = New System.Windows.Forms.ToolStripStatusLabel()
         Me.epValida = New System.Windows.Forms.ErrorProvider(Me.components)
-        Me.btnAddParcela = New System.Windows.Forms.Button()
         Me.tsPrincipal.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
@@ -533,6 +533,18 @@ Partial Class frmContaReceber
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Parcelas"
         '
+        'btnAddParcela
+        '
+        Me.btnAddParcela.Enabled = False
+        Me.btnAddParcela.Image = Global.Financeiro.My.Resources.Resources.icone_remover_parcela
+        Me.btnAddParcela.Location = New System.Drawing.Point(460, 19)
+        Me.btnAddParcela.Name = "btnAddParcela"
+        Me.btnAddParcela.Size = New System.Drawing.Size(115, 23)
+        Me.btnAddParcela.TabIndex = 4
+        Me.btnAddParcela.Text = "Adicionar"
+        Me.btnAddParcela.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+        Me.btnAddParcela.UseVisualStyleBackColor = True
+        '
         'btnEstornar
         '
         Me.btnEstornar.Enabled = False
@@ -669,18 +681,6 @@ Partial Class frmContaReceber
         'epValida
         '
         Me.epValida.ContainerControl = Me
-        '
-        'btnAddParcela
-        '
-        Me.btnAddParcela.Enabled = False
-        Me.btnAddParcela.Image = Global.Financeiro.My.Resources.Resources.icone_remover_parcela
-        Me.btnAddParcela.Location = New System.Drawing.Point(460, 19)
-        Me.btnAddParcela.Name = "btnAddParcela"
-        Me.btnAddParcela.Size = New System.Drawing.Size(115, 23)
-        Me.btnAddParcela.TabIndex = 4
-        Me.btnAddParcela.Text = "Adicionar"
-        Me.btnAddParcela.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
-        Me.btnAddParcela.UseVisualStyleBackColor = True
         '
         'frmContaReceber
         '

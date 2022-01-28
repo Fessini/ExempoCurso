@@ -10,7 +10,7 @@ Public Class DataAccess
 
 #Region "Construtor"
     Sub New()
-        conn = New SqlConnection("Server=CODE-DESENV\SQLEXPRESS;Database=ExemploCurso;User Id=sa;Password=@mar147;")
+        conn = New SqlConnection("Server=CODE-DESENV;Database=ExemploCurso;User Id=sa;Password=@mar147;")
         conn.Open()
     End Sub
 #End Region

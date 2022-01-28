@@ -464,4 +464,18 @@ Public Class frmContaReceber
         End If
 
     End Sub
+
+    Private Sub btnEstornar_Click(sender As Object, e As EventArgs) Handles btnEstornar.Click
+
+    End Sub
+
+    Private Sub btnBaixar_Click(sender As Object, e As EventArgs) Handles btnBaixar.Click
+        Using frm As New frmBaixaParcela
+            frm.ValorParcela = dgvParcelas.CurrentRow.Cells("colValor").Value
+            frm.ShowDialog()
+            If frm.Cancelado = False Then
+
+            End If
+        End Using
+    End Sub
 End Class

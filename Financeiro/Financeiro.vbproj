@@ -72,6 +72,12 @@
     <Compile Include="frmAdionaParcela.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmBaixaParcela.Designer.vb">
+      <DependentUpon>frmBaixaParcela.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmBaixaParcela.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmContaReceber.Designer.vb">
       <DependentUpon>frmContaReceber.vb</DependentUpon>
     </Compile>
@@ -97,6 +103,9 @@
   <ItemGroup>
     <EmbeddedResource Include="frmAdionaParcela.resx">
       <DependentUpon>frmAdionaParcela.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmBaixaParcela.resx">
+      <DependentUpon>frmBaixaParcela.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmContaReceber.resx">
       <DependentUpon>frmContaReceber.vb</DependentUpon>

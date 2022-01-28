@@ -2,7 +2,8 @@
 AS
 SELECT        dbo.MOV_CONTA_RECEBER_ITEM.ID_MOV_CONTA_ITEM, dbo.MOV_CONTA_RECEBER_ITEM.CODIGO_CONTA_RECEBER, dbo.MOV_CONTA_RECEBER_ITEM.CODIGO_CONTA_BANCO, 
                          dbo.MOV_CONTA_RECEBER_ITEM.VALOR_PARCELA_RECEBER, dbo.MOV_CONTA_RECEBER_ITEM.DATA_PAGAMENTO_RECEBER, dbo.MOV_CONTA_RECEBER_ITEM.DATA_VENCIMENTO_RECEBER, 
-                         dbo.MOV_CONTA_RECEBER_ITEM.NUMERO_PARCELA_RECEBER, dbo.CAD_CONTA_BANCO.DESCRICAO_CONTA_BANCO AS NOME_BANCO
+                         dbo.MOV_CONTA_RECEBER_ITEM.NUMERO_PARCELA_RECEBER, dbo.CAD_CONTA_BANCO.DESCRICAO_CONTA_BANCO AS NOME_BANCO, dbo.MOV_CONTA_RECEBER_ITEM.VALOR_RECEBIDO, 
+                         dbo.MOV_CONTA_RECEBER_ITEM.VALOR_DESCONTO, dbo.MOV_CONTA_RECEBER_ITEM.VALOR_JUROS
 FROM            dbo.MOV_CONTA_RECEBER INNER JOIN
                          dbo.MOV_CONTA_RECEBER_ITEM ON dbo.MOV_CONTA_RECEBER.ID_CONTA_RECEBER = dbo.MOV_CONTA_RECEBER_ITEM.CODIGO_CONTA_RECEBER LEFT OUTER JOIN
                          dbo.CAD_CONTA_BANCO ON dbo.CAD_CONTA_BANCO.ID_CONTA_BANCO = dbo.MOV_CONTA_RECEBER_ITEM.CODIGO_CONTA_RECEBER
@@ -78,7 +79,7 @@ Begin DesignProperties =
    End
    Begin DiagramPane = 
       Begin Origin = 
-         Top = 0
+         Top = -96
          Left = 0
       End
       Begin Tables = 
@@ -96,7 +97,7 @@ Begin DesignProperties =
             Begin Extent = 
                Top = 6
                Left = 346
-               Bottom = 136
+               Bottom = 245
                Right = 596
             End
             DisplayFlags = 280
@@ -150,4 +151,6 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'VW_PARCELA_RECEBER';
+
+
 
