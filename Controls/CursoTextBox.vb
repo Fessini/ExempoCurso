@@ -25,8 +25,6 @@ Public Class CursoTextBox
                 e.Handled = True
             ElseIf Char.IsPunctuation(e.KeyChar) Then
                 e.Handled = True
-            ElseIf Char.IsControl(e.KeyChar) Then
-                e.Handled = True
             ElseIf Char.IsSeparator(e.KeyChar) Then
                 e.Handled = True
             ElseIf Char.IsSymbol(e.KeyChar) Then

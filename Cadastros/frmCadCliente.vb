@@ -13,6 +13,16 @@ Public Class frmCadCliente
     Private intOpcao As Opcao
 #End Region
 #Region "Métodos"
+    Private Sub PesqCliente()
+        Using frm As New frmPesqCliente
+            frm.ShowDialog()
+            If frm.IDCliente > 0 Then
+                Dim enter As New KeyEventArgs(Keys.Enter)
+                txtID.Text = frm.IDCliente
+                txtID_KeyDown(Nothing, enter)
+            End If
+        End Using
+    End Sub
     Private Sub AtivaDesativa(ByVal Status As Boolean)
         rbFisico.Enabled = Status
         rbJuridico.Enabled = Status
@@ -41,7 +51,7 @@ Public Class frmCadCliente
     Private Sub tsbIncluir_Click(sender As Object, e As EventArgs) Handles tsbIncluir.Click
         'TIPO DE OPERAÇÃO
         intOpcao = Opcao.Incluir
-        '
+        'alterado pelo notebook
         'CONFIGURANDO OS BOTÕES
         tsbIncluir.Enabled = False
         tsbEditar.Enabled = False
@@ -354,6 +364,9 @@ Public Class frmCadCliente
             Catch ex As Exception
                 TrataErro("Problema ao tentar localizar cliente.", ex)
             End Try
+        ElseIf txtID.TextLength = 0 And e.KeyCode = Keys.Enter Then
+            'CHAMA FORMULÁRIO DE PESQUISA DE CLIENTE
+            PesqCliente()
         End If
     End Sub
 
@@ -386,5 +399,10 @@ Public Class frmCadCliente
         ElseIf tsbCancelar.Enabled = True And e.KeyCode = Keys.Escape Then
             tsbCancelar_Click(Nothing, Nothing)
         End If
+    End Sub
+
+    Private Sub btnPesquisar_Click(sender As Object, e As EventArgs) Handles btnPesquisar.Click
+        'CHAMA FORMULÁRIO DE PESQUISA DE CLIENTE
+        PesqCliente()
     End Sub
 End Class

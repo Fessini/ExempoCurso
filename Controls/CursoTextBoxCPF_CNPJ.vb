@@ -24,6 +24,13 @@ Public Class CursoTextBoxCPF_CNPJ
     <Category("Curso")>
     <Description("Informa se o CPF ou CNPJ é válido.")>
     Public Property IsValido As Boolean
+        Get
+            Return m_blnValida
+        End Get
+        Set(value As Boolean)
+            m_blnValida = value
+        End Set
+    End Property
 
     <Category("Curso")>
     <Description("Configura o controle para validar CPF.")>

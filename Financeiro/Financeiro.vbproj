@@ -46,6 +46,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -64,7 +66,24 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.vb" />
+    <Compile Include="frmAdionaParcela.Designer.vb">
+      <DependentUpon>frmAdionaParcela.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmAdionaParcela.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBaixaParcela.Designer.vb">
+      <DependentUpon>frmBaixaParcela.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmBaixaParcela.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmContaReceber.Designer.vb">
+      <DependentUpon>frmContaReceber.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmContaReceber.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -82,6 +101,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="frmAdionaParcela.resx">
+      <DependentUpon>frmAdionaParcela.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmBaixaParcela.resx">
+      <DependentUpon>frmBaixaParcela.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmContaReceber.resx">
+      <DependentUpon>frmContaReceber.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -99,6 +127,53 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icone_novo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icone_editar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icone_consultar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icone_cancelar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icone_salvar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icone_deletar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icone_sair.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Cadastros\Cadastros.vbproj">
+      <Project>{b4d90250-64e2-4b3b-a0f2-132ec58b2ae8}</Project>
+      <Name>Cadastros</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Controls\Controls.vbproj">
+      <Project>{8D4B173E-13AB-4999-9E41-BDC48475296E}</Project>
+      <Name>Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataBase\DataBase.vbproj">
+      <Project>{5f9f5149-cb44-4c3f-adc7-ae95e694a551}</Project>
+      <Name>DataBase</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icone_procurar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icone_estornar_parcela.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icone_baixar_parcela.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icone_remover_parcela.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
